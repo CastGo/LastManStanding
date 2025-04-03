@@ -37,17 +37,23 @@ public class SaveController : MonoBehaviour
     public void SaveGame()
     {
         List<ZombieSaveData> zombiesData = new List<ZombieSaveData>();
-        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
 
-        foreach (GameObject zombie in zombies)
+        foreach (GameObject zombie in allObjects)
         {
-            ZombieSaveData zombieData = new ZombieSaveData
+            // ✅ เช็คว่าเป็น Enemy, อยู่ใน scene จริง (ไม่ใช่ prefab), และ scene ชื่อ 2-1 Room
+            if (zombie.CompareTag("Enemy") &&
+                zombie.scene.IsValid() &&
+                zombie.scene.name == "2-1 Room")
             {
-                position = zombie.transform.position,
-                zombieName = zombie.name.Replace("(Clone)", "").Trim(),
-                isActive = zombie.activeSelf // ✅ บันทึกสถานะเปิด/ปิด
-            };
-            zombiesData.Add(zombieData);
+                ZombieSaveData zombieData = new ZombieSaveData
+                {
+                    position = zombie.transform.position,
+                    zombieName = zombie.name.Replace("(Clone)", "").Trim(),
+                    isActive = zombie.activeSelf
+                };
+                zombiesData.Add(zombieData);
+            }
         }
 
         // หาตัว Player และดึงค่า currentHP
@@ -68,7 +74,7 @@ public class SaveController : MonoBehaviour
         SaveData saveData = new SaveData
         {
             playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position,
-            playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<Unit>().currentHP,
+            playerHP = GameManager.instance.savedHP,
             zombiesData = zombiesData
         };
 
@@ -88,27 +94,20 @@ public class SaveController : MonoBehaviour
             {
                 player.transform.position = saveData.playerPosition;
                 player.GetComponent<Unit>().currentHP = saveData.playerHP;
+                GameManager.instance.savedHP = saveData.playerHP;
             }
 
             // 🔁 อัปเดต zombie ทั้งหมดตาม saveData
             foreach (ZombieSaveData zombieData in saveData.zombiesData)
             {
-                GameObject existing = GameObject.Find(zombieData.zombieName + "(Clone)");
-                if (existing != null)
+                GameObject[] allZombies = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (GameObject zombie in allZombies)
                 {
-                    // ถ้ามีอยู่แล้ว ให้ย้ายตำแหน่งและเปิด/ปิดตามที่บันทึก
-                    existing.transform.position = zombieData.position;
-                    existing.SetActive(zombieData.isActive);
-                }
-                else
-                {
-                    // ถ้ายังไม่มี ให้สร้างใหม่
-                    GameObject prefab = zombiePrefabs.Find(z => z.prefabName == zombieData.zombieName)?.prefab;
-                    if (prefab != null)
+                    if (zombie.name == zombieData.zombieName)
                     {
-                        GameObject newZombie = Instantiate(prefab, zombieData.position, Quaternion.identity);
-                        newZombie.name = zombieData.zombieName;
-                        newZombie.SetActive(zombieData.isActive);
+                        zombie.transform.position = zombieData.position;
+                        zombie.SetActive(zombieData.isActive);
+                        break;
                     }
                 }
             }

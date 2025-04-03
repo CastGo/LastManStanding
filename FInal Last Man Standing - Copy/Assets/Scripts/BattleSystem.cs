@@ -147,7 +147,7 @@ public class BattleSystem : MonoBehaviour
         GameManager.instance.SetSceneActive(SceneManager.GetSceneByName("2-1 Room"), true);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("2-1 Room"));
 
-        
+        SaveController.instance.LoadGame();
     }
     IEnumerator DelayReEnablePlayerCollider()
     {
@@ -191,7 +191,6 @@ public class BattleSystem : MonoBehaviour
 
         GameManager.instance.savedHP = playerUnit.currentHP;
 
-        StartCoroutine(PlayerRun());
         GameManager.instance.ReturnToPreviousScene();
     }
     public void OnAttackButton()
