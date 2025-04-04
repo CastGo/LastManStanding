@@ -555,7 +555,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1649881891003227701, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_Name
-      value: ZombieTest
+      value: ZombieTest2
       objectReference: {fileID: 0}
     - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3745,7 +3745,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1649881891003227701, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_Name
-      value: ZombieTest
+      value: ZombieTest3
       objectReference: {fileID: 0}
     - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4284,7 +4284,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1649881891003227701, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_Name
-      value: ZombieTest
+      value: ZombieTest1
       objectReference: {fileID: 0}
     - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_LocalPosition.x

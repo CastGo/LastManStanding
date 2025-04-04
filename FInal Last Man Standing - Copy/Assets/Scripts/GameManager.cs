@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject currentZombie;
     public bool isLoadingFromSave = false;
     public bool sceneWasDisabled = false;
-
+    public HashSet<string> deactivatedZombies = new HashSet<string>();
 
     private void Awake()
     {
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         SceneManager.SetActiveScene(previousScene);
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GameObject zombie = GameObject.FindGameObjectWithTag("Enemy"); // หา Zombie ในฉาก
+        GameObject zombie = GameManager.instance.currentZombie;// ✅ ใช้ตัวที่ต่อสู้จริง
 
         if (player != null)
         {
@@ -90,6 +90,19 @@ public class GameManager : MonoBehaviour
                 player.transform.position = playerPosition; // ถ้าไม่มี Zombie ก็ใช้ตำแหน่งเดิม
             }
         }
+
+        GameObject[] allZombies = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject z in allZombies)
+        {
+            if (z.CompareTag("Enemy") && z.scene.IsValid() && z.scene.name == "2-1 Room")
+            {
+                if (GameManager.instance.deactivatedZombies.Contains(z.name))
+                {
+                    z.SetActive(false);
+                }
+            }
+        }
+
     }
 
     public void SetSceneActive(Scene scene, bool isActive)

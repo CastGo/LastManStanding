@@ -131,8 +131,21 @@ public class BattleSystem : MonoBehaviour
         // ทำลาย Zombie ที่ถูกสู้ด้วยเท่านั้น (ป้องกันการลบ zombie ทั้งหมด)
         if (GameManager.instance.currentZombie != null)
         {
+            string name = GameManager.instance.currentZombie.name;
+            GameManager.instance.deactivatedZombies.Add(name); // ✅ จำชื่อ zombie ที่ถูกปิดไว้
             GameManager.instance.currentZombie.SetActive(false);
             GameManager.instance.currentZombie = null;
+        }
+        GameObject[] allZombies = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject zombie in allZombies)
+        {
+            if (zombie.CompareTag("Enemy") && zombie.scene.IsValid() && zombie.scene.name == "2-1 Room")
+            {
+                if (GameManager.instance.deactivatedZombies.Contains(zombie.name))
+                {
+                    zombie.SetActive(false);
+                }
+            }
         }
     }
     IEnumerator ReturnAfterLost()
