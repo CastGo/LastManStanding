@@ -42,9 +42,7 @@ public class SaveController : MonoBehaviour
         foreach (GameObject zombie in allObjects)
         {
             // ✅ เช็คว่าเป็น Enemy, อยู่ใน scene จริง (ไม่ใช่ prefab), และ scene ชื่อ 2-1 Room
-            if (zombie.CompareTag("Enemy") &&
-                zombie.scene.IsValid() &&
-                zombie.scene.name == "2-1 Room")
+            if ((zombie.CompareTag("Enemy") || zombie.CompareTag("MiniBoss") || zombie.CompareTag("Boss")) && zombie.scene.IsValid() &&zombie.scene.name == "2-1 Room")
             {
                 ZombieSaveData zombieData = new ZombieSaveData
                 {
@@ -97,13 +95,18 @@ public class SaveController : MonoBehaviour
                 GameManager.instance.savedHP = saveData.playerHP;
             }
 
+            List<GameObject> allZombies = new List<GameObject>();
+            allZombies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+            allZombies.AddRange(GameObject.FindGameObjectsWithTag("MiniBoss"));
+            allZombies.AddRange(GameObject.FindGameObjectsWithTag("Boss"));
             // 🔁 อัปเดต zombie ทั้งหมดตาม saveData
             foreach (ZombieSaveData zombieData in saveData.zombiesData)
             {
-                GameObject[] allZombies = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject zombie in allZombies)
                 {
-                    if (zombie.name == zombieData.zombieName)
+                    // เปรียบเทียบชื่อ zombie แบบ Trim แล้วเอา (Clone) ออก
+                    string zombieNameInScene = zombie.name.Replace("(Clone)", "").Trim();
+                    if (zombieNameInScene == zombieData.zombieName)
                     {
                         zombie.transform.position = zombieData.position;
                         zombie.SetActive(zombieData.isActive);
