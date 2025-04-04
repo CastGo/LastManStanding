@@ -8,7 +8,6 @@ public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleSystem : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public GameObject enemyPrefab;
 
 
     public Transform playerBattleStation;
@@ -43,7 +42,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.unitLevel = GameManager.instance.savedLevel;
         playerUnit.unitName = GameManager.instance.savedName;
 
-        GameObject enemyGo = Instantiate(enemyPrefab, enemyBattleStation);
+        GameObject enemyGo = Instantiate(GameManager.instance.nextEnemyPrefab, enemyBattleStation);
         enemyUnit = enemyGo.GetComponent<Unit>();
 
         dialogueText.text = "A wild" + enemyUnit.unitName + " approaches...";

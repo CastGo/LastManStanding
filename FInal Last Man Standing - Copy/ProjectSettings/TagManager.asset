@@ -9,6 +9,8 @@ TagManager:
   - item
   - enemy
   - Enemy
+  - MiniBoss
+  - Boss
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class ZombieBattleMapping
+{
+    public GameObject sceneZombie;   // zombie ที่เดินใน scene
+    public GameObject battleZombie;  // prefab ที่จะสู้ใน TurnBase
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -19,6 +25,10 @@ public class GameManager : MonoBehaviour
     public bool isLoadingFromSave = false;
     public bool sceneWasDisabled = false;
     public HashSet<string> deactivatedZombies = new HashSet<string>();
+    public GameObject normalZombieTurnBase;
+    public GameObject miniBossTurnBase;
+    public GameObject bossTurnBase;
+    public GameObject nextEnemyPrefab;
 
     private void Awake()
     {
@@ -38,6 +48,24 @@ public class GameManager : MonoBehaviour
         playerPosition = player.position;
         previousScene = SceneManager.GetActiveScene();
         currentZombie = zombie;
+
+        switch (zombie.tag)
+        {
+            case "Enemy":
+                nextEnemyPrefab = normalZombieTurnBase;
+                break;
+            case "MiniBoss":
+                nextEnemyPrefab = miniBossTurnBase;
+                break;
+            case "Boss":
+                nextEnemyPrefab = bossTurnBase;
+                break;
+            default:
+                Debug.LogWarning("Unknown tag on zombie: " + zombie.tag);
+                nextEnemyPrefab = normalZombieTurnBase; // fallback
+                break;
+        }
+
         StartCoroutine(LoadBattleScene());
     }
 

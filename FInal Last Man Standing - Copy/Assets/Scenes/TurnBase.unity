@@ -2098,13 +2098,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8418266314520985794, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
-  enemyPrefab: {fileID: 2955679264644415304, guid: c8796479c9c98c345916a35e00a35697, type: 3}
+  normalZombieTurnBase: {fileID: 2955679264644415304, guid: c8796479c9c98c345916a35e00a35697, type: 3}
+  miniBossTurnBase: {fileID: 2955679264644415304, guid: 61785c4506ab1fa4ebc4136a9fa2012d, type: 3}
+  bossTurnBase: {fileID: 2955679264644415304, guid: 78e803c7ba08bd64d9402a04540d149e, type: 3}
   playerBattleStation: {fileID: 1665433802}
   enemyBattleStation: {fileID: 1917171436}
   dialogueText: {fileID: 187630017}
   playerHUD: {fileID: 157990551}
   enemyHUD: {fileID: 936564650}
   state: 0
+  sceneWasDisabled: 0
 --- !u!4 &767871891
 Transform:
   m_ObjectHideFlags: 0
