@@ -24,6 +24,7 @@ public class BattleSystem : MonoBehaviour
 
     public BattleState state;
     public bool sceneWasDisabled = false;
+    private bool hasHealed = false;
 
     void Start()
     {
@@ -218,6 +219,13 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
 
+        if (hasHealed)
+        {
+            dialogueText.text = "You can't heal again!";
+            return;
+        }
+
+        hasHealed = true; // ✅ Mark ว่าใช้ Heal ไปแล้ว
         StartCoroutine(PlayerHeal());
     }
     public void OnRunButton()
