@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.instance.savedHP = unit.currentHP;
             GameManager.instance.savedMaxHP = unit.maxHP;
+            GameManager.instance.savedEnergy = unit.currentEnergy;
+            GameManager.instance.savedMaxEnergy = unit.maxEnergy;
             GameManager.instance.savedDamage = unit.damage;
             GameManager.instance.savedLevel = unit.unitLevel;
             GameManager.instance.savedName = unit.unitName;

@@ -73,6 +73,7 @@ public class SaveController : MonoBehaviour
         {
             playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position,
             playerHP = GameManager.instance.savedHP,
+            playerEnergy = GameManager.instance.savedEnergy,
             zombiesData = zombiesData
         };
 
@@ -93,6 +94,8 @@ public class SaveController : MonoBehaviour
                 player.transform.position = saveData.playerPosition;
                 player.GetComponent<Unit>().currentHP = saveData.playerHP;
                 GameManager.instance.savedHP = saveData.playerHP;
+                player.GetComponent<Unit>().currentEnergy = saveData.playerEnergy;
+                GameManager.instance.savedEnergy = saveData.playerEnergy;
             }
 
             List<GameObject> allZombies = new List<GameObject>();

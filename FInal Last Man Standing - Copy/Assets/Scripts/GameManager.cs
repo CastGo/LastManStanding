@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     private Scene previousScene;
     public int savedHP;
     public int savedMaxHP;
+    public int savedEnergy; 
+    public int savedMaxEnergy;
     public int savedDamage;
     public int savedLevel;
     public string savedName;

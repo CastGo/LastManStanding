@@ -11,6 +11,8 @@ public class Unit : MonoBehaviour
 
     public int maxHP;
     public int currentHP;
+    public int maxEnergy;
+    public int currentEnergy;
 
     public bool TakeDamage(int dmg)
     {
@@ -32,6 +34,27 @@ public class Unit : MonoBehaviour
         if (currentHP > maxHP)
         {
             currentHP = maxHP;
+        }
+    }
+    public bool UseEnergy(int cost)
+    {
+        currentHP -= cost;
+
+        if (currentHP <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public void GainEnergy(int amount)
+    {
+        currentEnergy += amount;
+        if (currentEnergy > maxEnergy)
+        {
+            currentEnergy = maxEnergy;
         }
     }
 }

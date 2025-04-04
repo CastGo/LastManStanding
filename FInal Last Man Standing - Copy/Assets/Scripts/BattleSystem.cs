@@ -8,7 +8,9 @@ public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleSystem : MonoBehaviour
 {
     public GameObject playerPrefab;
-
+    public GameObject combatMenu;        
+    public GameObject attackFunction;    
+    public GameObject itemFunction;      
 
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
@@ -38,6 +40,8 @@ public class BattleSystem : MonoBehaviour
 
         playerUnit.currentHP = GameManager.instance.savedHP;
         playerUnit.maxHP = GameManager.instance.savedMaxHP;
+        playerUnit.currentEnergy = GameManager.instance.savedEnergy;
+        playerUnit.maxEnergy = GameManager.instance.savedMaxEnergy;
         playerUnit.damage = GameManager.instance.savedDamage;
         playerUnit.unitLevel = GameManager.instance.savedLevel;
         playerUnit.unitName = GameManager.instance.savedName;
@@ -121,6 +125,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         GameManager.instance.savedHP = playerUnit.currentHP;
+        GameManager.instance.savedEnergy = playerUnit.currentEnergy;
         // ปิดฉาก TurnBase แต่ไม่เปลี่ยนตำแหน่ง
         SceneManager.UnloadSceneAsync("TurnBase");
 
@@ -211,6 +216,7 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
 
+        ReturnToCombat();
         StartCoroutine(PlayerAttack());
     }
     public void OnHealButton()
@@ -233,5 +239,23 @@ public class BattleSystem : MonoBehaviour
             return;
 
         StartCoroutine(PlayerRun());
+    }
+    public void OpenAttackMenu()
+    {
+        combatMenu.SetActive(false);
+        attackFunction.SetActive(true);
+    }
+
+    public void OpenItemMenu()
+    {
+        combatMenu.SetActive(false);
+        itemFunction.SetActive(true);
+    }
+
+    public void ReturnToCombat()
+    {
+        attackFunction.SetActive(false);
+        itemFunction.SetActive(false);
+        combatMenu.SetActive(true);
     }
 }
