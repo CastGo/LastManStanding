@@ -208,6 +208,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         GameManager.instance.savedHP = playerUnit.currentHP;
+        GameManager.instance.savedEnergy = playerUnit.currentEnergy;
 
         GameManager.instance.ReturnToPreviousScene();
     }

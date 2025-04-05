@@ -5,17 +5,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[System.Serializable]
-public class ZombieBattleMapping
-{
-    public GameObject sceneZombie;   // zombie ที่เดินใน scene
-    public GameObject battleZombie;  // prefab ที่จะสู้ใน TurnBase
-}
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private Vector3 playerPosition; // บันทึกตำแหน่ง Player
     private Scene previousScene;
+
     public int savedHP;
     public int savedMaxHP;
     public int savedEnergy; 
@@ -99,11 +94,11 @@ public class GameManager : MonoBehaviour
         SceneManager.SetActiveScene(previousScene);
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GameObject zombie = GameManager.instance.currentZombie;// ✅ ใช้ตัวที่ต่อสู้จริง
+
+        GameObject zombie = GameManager.instance.currentZombie;
 
         if (player != null)
         {
-            // ตรวจสอบตำแหน่งของ Player และ Zombie
             if (zombie != null)
             {
                 if (player.transform.position.x > zombie.transform.position.x)
@@ -117,14 +112,15 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                player.transform.position = playerPosition; // ถ้าไม่มี Zombie ก็ใช้ตำแหน่งเดิม
+                player.transform.position = playerPosition;
             }
         }
 
         GameObject[] allZombies = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (GameObject z in allZombies)
         {
-            if (z.CompareTag("Enemy") && z.scene.IsValid() && z.scene.name == "2-1 Room")
+            if ((z.CompareTag("Enemy") || z.CompareTag("MiniBoss") || z.CompareTag("Boss"))
+                && z.scene.IsValid() && z.scene.name == "2-1 Room")
             {
                 if (GameManager.instance.deactivatedZombies.Contains(z.name))
                 {
@@ -132,7 +128,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void SetSceneActive(Scene scene, bool isActive)

@@ -17,4 +17,5 @@ public class SaveData
     public int playerHP; // ค่าพลังชีวิตของ Player
     public int playerEnergy;
     public List<ZombieSaveData> zombiesData; // รายการข้อมูลของ zombie
+    public List<InventorySaveData> inventorySaveData;
 }

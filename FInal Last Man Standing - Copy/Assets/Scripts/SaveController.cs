@@ -18,6 +18,7 @@ public class SaveController : MonoBehaviour
     public List<ZombiePrefabEntry> zombiePrefabs; // ลาก prefab เข้า Inspector
 
     private string saveLocation;
+    private InventoryController inventoryController;
     void Start()
     {
         if (instance == null)
@@ -31,6 +32,9 @@ public class SaveController : MonoBehaviour
         }
 
         saveLocation = Path.Combine(Application.persistentDataPath, "saveData.json");
+        inventoryController = FindAnyObjectByType<InventoryController>();
+
+        
     }
 
 
@@ -74,7 +78,8 @@ public class SaveController : MonoBehaviour
             playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position,
             playerHP = GameManager.instance.savedHP,
             playerEnergy = GameManager.instance.savedEnergy,
-            zombiesData = zombiesData
+            zombiesData = zombiesData,
+            inventorySaveData = inventoryController.GetInventoryItem()
         };
 
         File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData)); // เขียนข้อมูลลงไฟล์
@@ -117,8 +122,8 @@ public class SaveController : MonoBehaviour
                     }
                 }
             }
-
-            GameManager.instance.isLoadingFromSave = false;
+            inventoryController.SetInventoryItems(saveData.inventorySaveData);
+            //GameManager.instance.isLoadingFromSave = false;
         }
     }
 }
