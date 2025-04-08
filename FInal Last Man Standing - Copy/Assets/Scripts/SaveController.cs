@@ -40,6 +40,21 @@ public class SaveController : MonoBehaviour
 
     public void SaveGame()
     {
+        List<SceneObjectSaveData> sceneObjects = new List<SceneObjectSaveData>();
+
+        GameObject[] allSceneObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allSceneObjects)
+        {
+            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room" && obj.CompareTag("item"))
+            {
+                sceneObjects.Add(new SceneObjectSaveData
+                {
+                    objectName = obj.name,
+                    isActive = obj.activeSelf
+                });
+            }
+        }
+
         List<ZombieSaveData> zombiesData = new List<ZombieSaveData>();
         GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
 
@@ -79,7 +94,8 @@ public class SaveController : MonoBehaviour
             playerHP = GameManager.instance.savedHP,
             playerEnergy = GameManager.instance.savedEnergy,
             zombiesData = zombiesData,
-            inventorySaveData = inventoryController.GetInventoryItems()
+            inventorySaveData = inventoryController.GetInventoryItems(),
+            sceneObjectData = sceneObjects
         };
 
         File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData)); // เขียนข้อมูลลงไฟล์
@@ -122,6 +138,28 @@ public class SaveController : MonoBehaviour
                     }
                 }
             }
+
+            foreach (SceneObjectSaveData objData in saveData.sceneObjectData)
+            {
+                GameObject[] allSceneObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+                foreach (GameObject obj in allSceneObjects)
+                {
+                    if (obj.scene.IsValid() && obj.scene.name == "2-1 Room" && obj.name == objData.objectName)
+                    {
+                        obj.SetActive(objData.isActive);
+
+                        // ถ้า obj มี InteractObject และมี interact2 → sync ด้วย
+                        InteractObject interactObj = obj.GetComponent<InteractObject>();
+                        if (interactObj != null && interactObj.interact2 != null)
+                        {
+                            interactObj.interact2.SetActive(objData.isActive);
+                        }
+
+                        break;
+                    }
+                }
+            }
+
             inventoryController.SetInventoryItems(saveData.inventorySaveData);
             //GameManager.instance.isLoadingFromSave = false;
         }

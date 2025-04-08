@@ -5,6 +5,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class SceneObjectTempData
+{
+    public string name;
+    public bool isActive;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -26,6 +33,7 @@ public class GameManager : MonoBehaviour
     public GameObject miniBossTurnBase;
     public GameObject bossTurnBase;
     public GameObject nextEnemyPrefab;
+    public List<SceneObjectTempData> sceneObjectStates = new List<SceneObjectTempData>();
 
     private void Awake()
     {
@@ -63,6 +71,19 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        sceneObjectStates.Clear();
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room" && obj.CompareTag("item"))
+            {
+                sceneObjectStates.Add(new SceneObjectTempData
+                {
+                    name = obj.name,
+                    isActive = obj.activeSelf
+                });
+            }
+        }
         StartCoroutine(LoadBattleScene());
     }
 
@@ -130,6 +151,30 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room")
+            {
+                foreach (var state in sceneObjectStates)
+                {
+                    if (obj.name.Contains(state.name)) // ป้องกันกรณี clone
+                    {
+                        obj.SetActive(state.isActive);
+
+                        // ถ้ามี interact2 ให้ Sync ด้วย
+                        InteractObject io = obj.GetComponent<InteractObject>();
+                        if (io != null && io.interact2 != null)
+                        {
+                            io.interact2.SetActive(state.isActive);
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void SetSceneActive(Scene scene, bool isActive)
@@ -152,5 +197,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RestoreSceneObjects()
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room")
+            {
+                foreach (var state in sceneObjectStates)
+                {
+                    if (obj.name.Contains(state.name))
+                    {
+                        obj.SetActive(state.isActive);
 
+                        InteractObject io = obj.GetComponent<InteractObject>();
+                        if (io != null && io.interact2 != null)
+                        {
+                            io.interact2.SetActive(state.isActive);
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

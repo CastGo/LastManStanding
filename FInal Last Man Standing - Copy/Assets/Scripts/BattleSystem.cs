@@ -133,6 +133,8 @@ public class BattleSystem : MonoBehaviour
         GameManager.instance.SetSceneActive(SceneManager.GetSceneByName("2-1 Room"), true);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("2-1 Room"));
 
+        GameManager.instance.RestoreSceneObjects();
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
