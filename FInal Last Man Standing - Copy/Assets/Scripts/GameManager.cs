@@ -99,6 +99,8 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
         {
+            player.GetComponent<PlayerController>()?.RefreshStatsFromGameManager();
+
             if (zombie != null)
             {
                 if (player.transform.position.x > zombie.transform.position.x)

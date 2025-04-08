@@ -133,6 +133,11 @@ public class BattleSystem : MonoBehaviour
         GameManager.instance.SetSceneActive(SceneManager.GetSceneByName("2-1 Room"), true);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("2-1 Room"));
 
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            player.GetComponent<PlayerController>()?.RefreshStatsFromGameManager();
+        }
         // ทำลาย Zombie ที่ถูกสู้ด้วยเท่านั้น (ป้องกันการลบ zombie ทั้งหมด)
         if (GameManager.instance.currentZombie != null)
         {
