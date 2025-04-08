@@ -11,12 +11,15 @@ public class InteractObject : MonoBehaviour
     public Transform teleportDestination;
 
     public GameObject interact;
+    public GameObject interact2;
     public GameObject interactLight;
     private bool playerInRange;
+    private InventoryController inventoryController;
 
     void Start()
     {
         confiner = FindAnyObjectByType<CinemachineConfiner>();
+        inventoryController = FindObjectOfType<InventoryController>();
     }
 
     // Update is called once per frame
@@ -24,22 +27,33 @@ public class InteractObject : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E) && playerInRange)
         {      
-                if (interact.CompareTag("savepoint"))
+            if (interact.CompareTag("savepoint"))
+            {
+                SaveController saveController = FindObjectOfType<SaveController>();
+                if (saveController != null) 
+                { 
+                    saveController.SaveGame();
+                }
+            }
+            if (interact.CompareTag("item"))
+            {
+                Item item = interact.GetComponent<Item>();
+                if (item != null)
                 {
-                    SaveController saveController = FindObjectOfType<SaveController>();
-                    if (saveController != null) 
-                    { 
-                        saveController.SaveGame();
+                    //Add item inventory
+                    bool itemAdded = inventoryController.AddItem(interact.gameObject);
+
+                    if (itemAdded)
+                    {
+                        interact.SetActive(false);
+                        interact2.SetActive(false);
                     }
                 }
-                if (interact.CompareTag("item"))
-                {
-                    
-                }
-                if (interact.CompareTag("door"))
-                {
-                    confiner.m_BoundingShape2D = map;
-
+            }
+            if (interact.CompareTag("door"))
+            {
+                confiner.m_BoundingShape2D = map;
+                
                 if (teleportDestination != null)
                 {
                     GameObject player = GameObject.FindGameObjectWithTag("Player");

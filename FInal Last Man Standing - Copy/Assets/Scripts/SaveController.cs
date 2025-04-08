@@ -79,7 +79,7 @@ public class SaveController : MonoBehaviour
             playerHP = GameManager.instance.savedHP,
             playerEnergy = GameManager.instance.savedEnergy,
             zombiesData = zombiesData,
-            inventorySaveData = inventoryController.GetInventoryItem()
+            inventorySaveData = inventoryController.GetInventoryItems()
         };
 
         File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData)); // เขียนข้อมูลลงไฟล์
