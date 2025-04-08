@@ -65,6 +65,16 @@ public class InventoryController : MonoBehaviour
 
     public void SetInventoryItems(List<InventorySaveData> inventorySaveData)
     {
+        foreach (Transform slotTransform in slotPanel.transform)
+        {
+            ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
+            if (slot.currentItem != null)
+            {
+                Destroy(slot.currentItem);
+                slot.currentItem = null;
+            }
+        }
+
         foreach (InventorySaveData data in inventorySaveData)
         {
             if (data.slotIndex < slotCount)
