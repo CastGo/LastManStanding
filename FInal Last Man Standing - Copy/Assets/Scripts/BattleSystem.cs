@@ -29,6 +29,9 @@ public class BattleSystem : MonoBehaviour
     private bool hasUsedItemThisTurn = false;
 
     int miniBossTurnCounter = 0;
+    int bossTurnCounter = 0;
+    bool bossHealedAtHalf = false;
+    bool bossHealedAtQuarter = false;
 
     void Start()
     {
@@ -98,19 +101,61 @@ public class BattleSystem : MonoBehaviour
             {
                 dialogueText.text = "MiniBoss uses a POWERFUL ATTACK!";
                 yield return new WaitForSeconds(1f);
-                isDead = playerUnit.TakeDamage(enemyUnit.damage * 2); // โจมตีหนัก
+                isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
             }
             else
             {
-                isDead = playerUnit.TakeDamage(enemyUnit.damage); // โจมตีธรรมดา
+                isDead = playerUnit.TakeDamage(enemyUnit.damage);
+            }
+        }
+        else if (enemyUnit.CompareTag("Boss"))
+        {
+            bossTurnCounter++;
+
+            // 1️⃣ Heal logic
+            int halfHP = enemyUnit.maxHP / 2;
+            int quarterHP = enemyUnit.maxHP / 4;
+
+            if (enemyUnit.currentHP <= quarterHP && !bossHealedAtQuarter)
+            {
+                dialogueText.text = "Boss regenerates with DARK MAGIC!";
+                yield return new WaitForSeconds(1f);
+                enemyUnit.Heal(40); // 🔁 ปรับตามต้องการ
+                enemyHUD.SetHP(enemyUnit.currentHP);
+                bossHealedAtQuarter = true;
+            }
+            else if (enemyUnit.currentHP <= halfHP && !bossHealedAtHalf)
+            {
+                dialogueText.text = "Boss uses a healing spell!";
+                yield return new WaitForSeconds(1f);
+                enemyUnit.Heal(30);
+                enemyHUD.SetHP(enemyUnit.currentHP);
+                bossHealedAtHalf = true;
+            }
+            else
+            {
+                // 2️⃣ Attack logic
+                if (bossTurnCounter % 2 == 0)
+                {
+                    dialogueText.text = "Boss unleashes a POWER STRIKE!";
+                    yield return new WaitForSeconds(1f);
+                    isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
+                }
+                else
+                {
+                    isDead = playerUnit.TakeDamage(enemyUnit.damage);
+                }
+
+                playerHUD.SetHP(playerUnit.currentHP);
             }
         }
         else
         {
-            isDead = playerUnit.TakeDamage(enemyUnit.damage); // ศัตรูทั่วไป
+            // Enemy ปกติ
+            isDead = playerUnit.TakeDamage(enemyUnit.damage);
+            playerHUD.SetHP(playerUnit.currentHP);
         }
 
-        playerHUD.SetHP(playerUnit.currentHP);
         yield return new WaitForSeconds(1f);
 
         if (isDead)
