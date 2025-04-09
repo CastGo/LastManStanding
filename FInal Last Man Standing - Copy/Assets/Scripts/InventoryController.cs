@@ -35,12 +35,17 @@ public class InventoryController : MonoBehaviour
             inventoryPanel.SetActive(isInventoryOpen);
         }
 
+        // ✅ ตรวจสอบคลิกซ้ายหรือขวา แล้วส่งค่าไปยัง DetectSlotClick
         if (Input.GetMouseButtonDown(0) && isInventoryOpen)
         {
-            DetectSlotClick();
+            DetectSlotClick(false); // คลิกซ้าย
+        }
+        else if (Input.GetMouseButtonDown(1) && isInventoryOpen)
+        {
+            DetectSlotClick(true); // คลิกขวา
         }
     }
-    private void DetectSlotClick()
+    private void DetectSlotClick(bool isRightClick)
     {
         Vector2 mousePos = Input.mousePosition;
         bool slotClicked = false;
@@ -52,18 +57,23 @@ public class InventoryController : MonoBehaviour
             {
                 ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
 
-                // ✅ ยกเลิกช่องก่อนหน้า
                 if (selectedSlot != null)
                     selectedSlot.Deselect();
 
                 selectedSlot = slot;
                 selectedSlot.Select();
 
-                // ✅ ไม่ว่าใน slot จะมีไอเทมหรือไม่ ก็แสดงหรือเคลียร์ได้
                 if (slot.currentItem != null)
-                    ShowItemInfo(slot);
+                {
+                    if (isRightClick)
+                        UseItem(slot); // 👈 เพิ่มตรงนี้
+                    else
+                        ShowItemInfo(slot);
+                }
                 else
+                {
                     ClearItemInfo();
+                }
 
                 slotClicked = true;
                 break;
@@ -187,6 +197,27 @@ public class InventoryController : MonoBehaviour
         for (int i = 0; i < slotCount; i++)
         {
             Instantiate(slotPrefab, slotPanel.transform);
+        }
+    }
+    private void UseItem(ItemSlot slot)
+    {
+        if (slot.currentItem == null) return;
+
+        Item item = slot.currentItem.GetComponent<Item>();
+        if (item != null && item.isUsable)
+        {
+            item.Use(); // เรียกใช้ฟังก์ชันภายในไอเทม
+
+            item.quantity--;
+
+            if (item.quantity <= 0)
+            {
+                Destroy(slot.currentItem);
+                slot.currentItem = null;
+            }
+
+            slot.UpdateStackText();
+            ShowItemInfo(slot); // อัปเดตข้อมูลหลังใช้
         }
     }
     public void ShowItemInfo(ItemSlot slot)

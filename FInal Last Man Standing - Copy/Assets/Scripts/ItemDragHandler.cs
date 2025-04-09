@@ -57,17 +57,22 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 dropSlot.currentItem.transform.SetParent(originalSlot.transform);
                 originalSlot.currentItem = dropSlot.currentItem;
                 dropSlot.currentItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+                // ✅ อัปเดตจำนวนใน original
+                originalSlot.UpdateStackText();
             }
             else
             {
                 originalSlot.currentItem = null;
+                originalSlot.UpdateStackText(); // ✅ clear จำนวนที่ต้นทาง
             }
 
             // ย้ายของชิ้นนี้ไปยังช่องใหม่
             transform.SetParent(dropSlot.transform);
             dropSlot.currentItem = gameObject;
+            dropSlot.UpdateStackText(); // ✅ อัปเดตจำนวนในช่องใหม่
 
-            // ✅ อัปเดตกรอบและข้อมูล
+            // ✅ Sync UI
             if (inventoryController != null)
             {
                 if (inventoryController.selectedSlot != null)
@@ -77,11 +82,6 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 dropSlot.Select();
                 inventoryController.ShowItemInfo(dropSlot);
             }
-        }
-        else
-        {
-            // ไม่มีช่องรองรับ กลับช่องเดิม
-            transform.SetParent(originalParent);
         }
 
         // จัดให้อยู่ตรงกลางของ parent เสมอ

@@ -8,12 +8,15 @@ public class Item : MonoBehaviour
     public string itemName;
     public string itemDescription;
 
-    // ✅ เพิ่มจำนวน stack
     public int quantity = 1;
-
-    // ✅ ไอเทมนี้สามารถ stack ได้หรือไม่
     public bool isStackable = false;
-
-    // ✅ stack ได้สูงสุดกี่อัน
     public int maxStack = 10;
+
+    public bool isUsable = false;
+
+    public void Use()
+    {
+        Debug.Log("Used item: " + itemName);
+        // ใส่ logic การใช้งานไอเทมจริงๆ ตรงนี้ (เช่น Heal, เพิ่มพลัง, เป็นต้น)
+    }
 }

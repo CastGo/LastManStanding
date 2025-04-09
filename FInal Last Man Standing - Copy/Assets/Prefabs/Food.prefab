@@ -125,6 +125,7 @@ MonoBehaviour:
   quantity: 1
   isStackable: 1
   maxStack: 10
+  isUsable: 1
 --- !u!212 &5371663413061561432
 SpriteRenderer:
   m_ObjectHideFlags: 0
