@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 2
+  itemName: Food
+  itemDescription: Energy + 10 Hp +10
 --- !u!212 &5371663413061561432
 SpriteRenderer:
   m_ObjectHideFlags: 0

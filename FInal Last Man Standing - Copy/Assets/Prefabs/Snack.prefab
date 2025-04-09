@@ -202,6 +202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
+  itemName: Snack
+  itemDescription: Energy + 5
 --- !u!212 &-1881021972363297769
 SpriteRenderer:
   m_ObjectHideFlags: 0

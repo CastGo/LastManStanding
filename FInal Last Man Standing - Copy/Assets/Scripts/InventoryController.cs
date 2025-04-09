@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
 
 public class InventoryController : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class InventoryController : MonoBehaviour
     public GameObject inventoryPanel;
     public GameObject slotPanel;
     public GameObject slotPrefab;
+    public TMP_Text itemNameText;
+    public TMP_Text itemDescriptionText;
     public int slotCount;
     public GameObject[] itemPrefabs;
     private bool isInventoryOpen = false;
@@ -39,6 +43,8 @@ public class InventoryController : MonoBehaviour
     private void DetectSlotClick()
     {
         Vector2 mousePos = Input.mousePosition;
+        bool slotClicked = false;
+
         foreach (Transform slotTransform in slotPanel.transform)
         {
             RectTransform rect = slotTransform.GetComponent<RectTransform>();
@@ -46,22 +52,31 @@ public class InventoryController : MonoBehaviour
             {
                 ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
 
-                // ✅ ถ้าคลิกซ้ำช่องเดิม → toggle ปิด
-                if (selectedSlot == slot)
-                {
+                // ✅ ยกเลิกช่องก่อนหน้า
+                if (selectedSlot != null)
                     selectedSlot.Deselect();
-                    selectedSlot = null;
-                }
+
+                selectedSlot = slot;
+                selectedSlot.Select();
+
+                // ✅ ไม่ว่าใน slot จะมีไอเทมหรือไม่ ก็แสดงหรือเคลียร์ได้
+                if (slot.currentItem != null)
+                    ShowItemInfo(slot);
                 else
-                {
-                    if (selectedSlot != null)
-                        selectedSlot.Deselect();
+                    ClearItemInfo();
 
-                    selectedSlot = slot;
-                    selectedSlot.Select();
-                }
-
+                slotClicked = true;
                 break;
+            }
+        }
+
+        if (!slotClicked)
+        {
+            ClearItemInfo();
+            if (selectedSlot != null)
+            {
+                selectedSlot.Deselect();
+                selectedSlot = null;
             }
         }
     }
@@ -138,5 +153,23 @@ public class InventoryController : MonoBehaviour
         {
             Instantiate(slotPrefab, slotPanel.transform);
         }
+    }
+    private void ShowItemInfo(ItemSlot slot)
+    {
+        if (slot.currentItem != null)
+        {
+            Item item = slot.currentItem.GetComponent<Item>();
+            if (item != null)
+            {
+                itemNameText.text = item.itemName;
+                itemDescriptionText.text = item.itemDescription;
+            }
+        }
+    }
+
+    private void ClearItemInfo()
+    {
+        itemNameText.text = "";
+        itemDescriptionText.text = "";
     }
 }
