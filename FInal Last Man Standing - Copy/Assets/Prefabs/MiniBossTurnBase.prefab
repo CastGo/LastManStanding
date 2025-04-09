@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6542874782083779833}
   m_Layer: 0
   m_Name: MiniBossTurnBase
-  m_TagString: Untagged
+  m_TagString: MiniBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: MiniBoss
   unitLevel: 1
-  damage: 10
-  maxHP: 50
-  currentHP: 50
+  damage: 5
+  maxHP: 25
+  currentHP: 25
+  maxEnergy: 0
+  currentEnergy: 0

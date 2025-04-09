@@ -28,6 +28,8 @@ public class BattleSystem : MonoBehaviour
     private bool hasHealed = false;
     private bool hasUsedItemThisTurn = false;
 
+    int miniBossTurnCounter = 0;
+
     void Start()
     {
         state = BattleState.START;
@@ -84,17 +86,34 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        dialogueText.text = enemyUnit.unitName + " attack!";
-
+        dialogueText.text = enemyUnit.unitName + " attacks!";
         yield return new WaitForSeconds(1f);
 
-        bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
+        bool isDead = false;
+
+        if (enemyUnit.CompareTag("MiniBoss"))
+        {
+            miniBossTurnCounter++;
+            if (miniBossTurnCounter % 2 == 0)
+            {
+                dialogueText.text = "MiniBoss uses a POWERFUL ATTACK!";
+                yield return new WaitForSeconds(1f);
+                isDead = playerUnit.TakeDamage(enemyUnit.damage * 2); // โจมตีหนัก
+            }
+            else
+            {
+                isDead = playerUnit.TakeDamage(enemyUnit.damage); // โจมตีธรรมดา
+            }
+        }
+        else
+        {
+            isDead = playerUnit.TakeDamage(enemyUnit.damage); // ศัตรูทั่วไป
+        }
 
         playerHUD.SetHP(playerUnit.currentHP);
-
         yield return new WaitForSeconds(1f);
 
-        if(isDead)
+        if (isDead)
         {
             state = BattleState.LOST;
             EndBattle();
@@ -104,20 +123,41 @@ public class BattleSystem : MonoBehaviour
             state = BattleState.PLAYERTURN;
             PlayerTurn();
         }
-
     }
 
     void EndBattle()
     {
         if (state == BattleState.WON)
         {
-            dialogueText.text = "You Won!!";
-            StartCoroutine(ReturnAfterWin());
+            // 💥 ตรวจสอบว่าเป็น MiniBoss แล้วให้ระเบิดใส่ผู้เล่น
+            if (enemyUnit.CompareTag("MiniBoss"))
+            {
+                int explosionDamage = 15; // หรือจะตั้งไว้ในตัวแปรก็ได้
+                dialogueText.text = "MiniBoss explodes!";
+                bool playerDied = playerUnit.TakeDamage(explosionDamage);
+                playerHUD.SetHP(playerUnit.currentHP);
+
+                if (playerDied)
+                {
+                    state = BattleState.LOST;
+                    dialogueText.text = "You both died!";
+                    StartCoroutine(ReturnAfterLost());
+                    StartCoroutine(DelayReEnablePlayerCollider());
+                    return; // ออกจากฟังก์ชันไม่ต้องไป ReturnAfterWin()
+                }
+
+                // ให้รอหน่อยให้เห็น effect การระเบิด
+                //StartCoroutine(DelayReturnAfterWin());
+            }
+            else
+            {
+                dialogueText.text = "You Won!!";
+                StartCoroutine(ReturnAfterWin());
+            }
         }
         else if (state == BattleState.LOST)
         {
             dialogueText.text = "You Lost!!";
-
             StartCoroutine(ReturnAfterLost());
             StartCoroutine(DelayReEnablePlayerCollider());
         }
