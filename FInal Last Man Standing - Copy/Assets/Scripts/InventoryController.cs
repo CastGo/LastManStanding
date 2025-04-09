@@ -6,6 +6,7 @@ using UnityEngine;
 public class InventoryController : MonoBehaviour
 {
     private ItemDictionary itemDictionary;
+    private ItemSlot selectedSlot;
 
     public GameObject inventoryPanel;
     public GameObject slotPanel;
@@ -28,6 +29,40 @@ public class InventoryController : MonoBehaviour
         {
             isInventoryOpen = !isInventoryOpen;
             inventoryPanel.SetActive(isInventoryOpen);
+        }
+
+        if (Input.GetMouseButtonDown(0) && isInventoryOpen)
+        {
+            DetectSlotClick();
+        }
+    }
+    private void DetectSlotClick()
+    {
+        Vector2 mousePos = Input.mousePosition;
+        foreach (Transform slotTransform in slotPanel.transform)
+        {
+            RectTransform rect = slotTransform.GetComponent<RectTransform>();
+            if (RectTransformUtility.RectangleContainsScreenPoint(rect, mousePos))
+            {
+                ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
+
+                // ✅ ถ้าคลิกซ้ำช่องเดิม → toggle ปิด
+                if (selectedSlot == slot)
+                {
+                    selectedSlot.Deselect();
+                    selectedSlot = null;
+                }
+                else
+                {
+                    if (selectedSlot != null)
+                        selectedSlot.Deselect();
+
+                    selectedSlot = slot;
+                    selectedSlot.Select();
+                }
+
+                break;
+            }
         }
     }
     public bool AddItem(GameObject itemPrefab)
