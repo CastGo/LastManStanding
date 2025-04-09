@@ -208,6 +208,8 @@ MonoBehaviour:
   isStackable: 1
   maxStack: 10
   isUsable: 1
+  restoreHP: 0
+  restoreEnergy: 5
 --- !u!212 &-1881021972363297769
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -206,7 +206,16 @@ public class InventoryController : MonoBehaviour
         Item item = slot.currentItem.GetComponent<Item>();
         if (item != null && item.isUsable)
         {
-            item.Use(); // เรียกใช้ฟังก์ชันภายในไอเทม
+            item.Use(); // เรียกใช้ฟังก์ชันภายในไอเทม (จะเพิ่ม HP/energy จริงใน Player)
+
+            // ✅ หลังใช้ → sync ค่ากับ GameManager
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                Unit unit = player.GetComponent<Unit>();
+                GameManager.instance.savedHP = unit.currentHP;
+                GameManager.instance.savedEnergy = unit.currentEnergy;
+            }
 
             item.quantity--;
 
