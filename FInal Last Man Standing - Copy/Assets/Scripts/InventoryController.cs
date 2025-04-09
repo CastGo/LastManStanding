@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 public class InventoryController : MonoBehaviour
 {
     private ItemDictionary itemDictionary;
-    private ItemSlot selectedSlot;
+    [HideInInspector] public ItemSlot selectedSlot;
 
     public GameObject inventoryPanel;
     public GameObject slotPanel;
@@ -154,7 +154,7 @@ public class InventoryController : MonoBehaviour
             Instantiate(slotPrefab, slotPanel.transform);
         }
     }
-    private void ShowItemInfo(ItemSlot slot)
+    public void ShowItemInfo(ItemSlot slot)
     {
         if (slot.currentItem != null)
         {

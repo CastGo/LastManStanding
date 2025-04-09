@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,11 +7,13 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     Transform originalParent;
     CanvasGroup canvasGroup;
+    InventoryController inventoryController;
 
     // Start is called before the first frame update
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        inventoryController = FindObjectOfType<InventoryController>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -29,16 +31,19 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true; // Enables raycasts
-        canvasGroup.alpha = 1f;            // No longer transparent
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
 
-        ItemSlot dropSlot = eventData.pointerEnter?.GetComponent<ItemSlot>(); // Slot where item dropped
-        if (dropSlot != null )
+        ItemSlot dropSlot = null;
+
+        if (eventData.pointerEnter != null)
         {
-            GameObject dropitem = eventData.pointerEnter;
-            if ( dropitem != null )
+            dropSlot = eventData.pointerEnter.GetComponent<ItemSlot>();
+
+            if (dropSlot == null)
             {
-                dropSlot = dropitem.GetComponentInParent<ItemSlot>();
+                GameObject dropObj = eventData.pointerEnter;
+                dropSlot = dropObj.GetComponentInParent<ItemSlot>();
             }
         }
 
@@ -46,31 +51,40 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         if (dropSlot != null)
         {
-            // Is a slot under drop point
             if (dropSlot.currentItem != null)
             {
-                // Slot has an item - swap items
+                // สลับของ
                 dropSlot.currentItem.transform.SetParent(originalSlot.transform);
                 originalSlot.currentItem = dropSlot.currentItem;
                 dropSlot.currentItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             }
             else
             {
-                // Target slot is empty
                 originalSlot.currentItem = null;
             }
 
-            // Move item into drop slot
+            // ย้ายของชิ้นนี้ไปยังช่องใหม่
             transform.SetParent(dropSlot.transform);
             dropSlot.currentItem = gameObject;
+
+            // ✅ อัปเดตกรอบและข้อมูล
+            if (inventoryController != null)
+            {
+                if (inventoryController.selectedSlot != null)
+                    inventoryController.selectedSlot.Deselect();
+
+                inventoryController.selectedSlot = dropSlot;
+                dropSlot.Select();
+                inventoryController.ShowItemInfo(dropSlot);
+            }
         }
         else
         {
-            // No slot under drop point, revert to original
+            // ไม่มีช่องรองรับ กลับช่องเดิม
             transform.SetParent(originalParent);
         }
 
-        // Center the item in its new parent
+        // จัดให้อยู่ตรงกลางของ parent เสมอ
         GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
 }
