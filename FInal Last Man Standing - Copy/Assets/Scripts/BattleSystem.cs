@@ -61,16 +61,16 @@ public class BattleSystem : MonoBehaviour
         PlayerTurn();
     }
 
-    IEnumerator PlayerAttack()
+    IEnumerator PlayerAttack(int customDamage)
     {
-        bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
+        bool isDead = enemyUnit.TakeDamage(customDamage);
 
         enemyHUD.SetHP(enemyUnit.currentHP);
-        dialogueText.text = "The attack is successful";
+        dialogueText.text = "The attack is successful!";
 
         yield return new WaitForSeconds(2f);
 
-        if(isDead)
+        if (isDead)
         {
             state = BattleState.WON;
             EndBattle();
@@ -81,6 +81,7 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(EnemyTurn());
         }
     }
+
     IEnumerator EnemyTurn()
     {
         dialogueText.text = enemyUnit.unitName + " attack!";
@@ -272,7 +273,26 @@ public class BattleSystem : MonoBehaviour
             return;
 
         ReturnToCombat();
-        StartCoroutine(PlayerAttack());
+        StartCoroutine(PlayerAttack(playerUnit.damage));
+    }
+    public void OnPowerAttackButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        int energyCost = 10;
+        if (playerUnit.UseEnergy(energyCost))
+        {
+            int powerfulDamage = playerUnit.damage * 3;
+            StartCoroutine(PlayerAttack(powerfulDamage));
+            playerHUD.SetEnergy(playerUnit.currentEnergy);
+            dialogueText.text = "You unleashed a POWER ATTACK!";
+        }
+        else
+        {
+            dialogueText.text = "Not enough energy!";
+            StartCoroutine(ResetDialogueText());
+        }
     }
     public void OnHealButton()
     {

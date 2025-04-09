@@ -957,7 +957,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'HeavyAttack
+  m_text: 'PowerAttack
 
 '
   m_isRightToLeft: 0
@@ -1751,7 +1751,7 @@ GameObject:
   - component: {fileID: 339878776}
   - component: {fileID: 339878775}
   m_Layer: 5
-  m_Name: HeavyAttack
+  m_Name: PowerAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1820,7 +1820,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 339878776}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 767871890}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: OnPowerAttackButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &339878776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3341,7 +3353,7 @@ GameObject:
   - component: {fileID: 906061747}
   - component: {fileID: 906061746}
   m_Layer: 5
-  m_Name: AoEAttack
+  m_Name: Stun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3849,7 +3861,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'AoE
+  m_text: 'Stun
 
 '
   m_isRightToLeft: 0

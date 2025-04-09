@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,16 +38,13 @@ public class Unit : MonoBehaviour
     }
     public bool UseEnergy(int cost)
     {
-        currentHP -= cost;
+        if (currentEnergy >= cost)
+        {
+            currentEnergy -= cost;
+            return true; // ใช้สำเร็จ
+        }
 
-        if (currentHP <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false; // energy ไม่พอ
     }
     public void GainEnergy(int amount)
     {
