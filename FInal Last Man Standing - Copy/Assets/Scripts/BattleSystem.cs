@@ -26,6 +26,7 @@ public class BattleSystem : MonoBehaviour
     public BattleState state;
     public bool sceneWasDisabled = false;
     private bool hasHealed = false;
+    private bool hasUsedItemThisTurn = false;
 
     void Start()
     {
@@ -193,6 +194,7 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerTurn()
     {
+        hasUsedItemThisTurn = false;
         dialogueText.text = "Choose an action";
     }
 
@@ -218,6 +220,51 @@ public class BattleSystem : MonoBehaviour
         GameManager.instance.savedEnergy = playerUnit.currentEnergy;
 
         GameManager.instance.ReturnToPreviousScene();
+    }
+    IEnumerator DelayShowActionMessage()
+    {
+        yield return new WaitForSeconds(2f);
+        dialogueText.text = "Choose an action";
+    }
+    IEnumerator ResetDialogueText()
+    {
+        yield return new WaitForSeconds(2f);
+        if (state == BattleState.PLAYERTURN)
+        {
+            dialogueText.text = "Choose an action";
+        }
+    }
+    private bool TryUseItemByID(int itemID)
+    {
+        InventoryController inventory = FindAnyObjectByType<InventoryController>();
+
+        foreach (Transform slotTransform in inventory.slotPanel.transform)
+        {
+            ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
+            if (slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item.ID == itemID)
+                {
+                    item.quantity--;
+                    slot.UpdateStackText();
+
+                    if (item.quantity <= 0)
+                    {
+                        Destroy(slot.currentItem);
+                        slot.currentItem = null;
+                    }
+
+                    // ✅ sync GameManager
+                    GameManager.instance.savedHP = playerUnit.currentHP;
+                    GameManager.instance.savedEnergy = playerUnit.currentEnergy;
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
     public void OnAttackButton()
     {
@@ -247,6 +294,95 @@ public class BattleSystem : MonoBehaviour
             return;
 
         StartCoroutine(PlayerRun());
+    }
+    public void OnUseSnackButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        if (hasUsedItemThisTurn)
+        {
+            dialogueText.text = "You already used an item this turn!";
+            StartCoroutine(ResetDialogueText());
+            ReturnToCombat();
+            return;
+        }
+
+        if (TryUseItemByID(1)) // ID 1 = Snack
+        {
+            playerUnit.GainEnergy(5);
+            playerHUD.SetEnergy(playerUnit.currentEnergy);
+            dialogueText.text = "You used a Snack!";
+            hasUsedItemThisTurn = true;
+
+            ReturnToCombat();
+        }
+        else
+        {
+            dialogueText.text = "You don't have any Snack!";
+        }
+        StartCoroutine(DelayShowActionMessage());
+    }
+
+    public void OnUseFoodButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        if (hasUsedItemThisTurn)
+        {
+            dialogueText.text = "You already used an item this turn!";
+            StartCoroutine(ResetDialogueText());
+            ReturnToCombat();
+            return;
+        }
+        if (TryUseItemByID(2)) // ID 2 = Food
+        {
+            playerUnit.Heal(10);
+            playerUnit.GainEnergy(10);
+
+            playerHUD.SetHP(playerUnit.currentHP);
+            playerHUD.SetEnergy(playerUnit.currentEnergy);
+
+            dialogueText.text = "You ate Food! (+10 HP, +10 Energy)";
+            hasUsedItemThisTurn = true;
+
+            ReturnToCombat();
+        }
+        else
+        {
+            dialogueText.text = "You don't have any Food!";
+        }
+        StartCoroutine(DelayShowActionMessage());
+    }
+
+    public void OnUseFirstAidButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        if (hasUsedItemThisTurn)
+        {
+            dialogueText.text = "You already used an item this turn!";
+            StartCoroutine(ResetDialogueText());
+            ReturnToCombat();
+            return;
+        }
+
+        if (TryUseItemByID(3)) // ID 3 = FirstAid
+        {
+            playerUnit.Heal(40);
+            playerHUD.SetHP(playerUnit.currentHP);
+            dialogueText.text = "You used FirstAid!";
+            hasUsedItemThisTurn = true;
+
+            ReturnToCombat();
+        }
+        else
+        {
+            dialogueText.text = "You don't have any FirstAid!";
+        }
+        StartCoroutine(DelayShowActionMessage());
     }
     public void OpenAttackMenu()
     {

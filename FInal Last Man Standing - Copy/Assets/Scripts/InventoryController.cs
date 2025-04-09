@@ -142,12 +142,17 @@ public class InventoryController : MonoBehaviour
             if (itemSlot.currentItem != null)
             {
                 Item item = itemSlot.currentItem.GetComponent<Item>();
-                invData.Add(new InventorySaveData
+
+                // ❗ ป้องกันไม่ให้บันทึก item ที่หมดแล้ว (quantity <= 0)
+                if (item.quantity > 0)
                 {
-                    itemID = item.ID,
-                    slotIndex = itemslotTranfrom.GetSiblingIndex(),
-                    quantity = item.quantity
-                });
+                    invData.Add(new InventorySaveData
+                    {
+                        itemID = item.ID,
+                        slotIndex = itemslotTranfrom.GetSiblingIndex(),
+                        quantity = item.quantity
+                    });
+                }
             }
         }
         return invData;
@@ -206,9 +211,9 @@ public class InventoryController : MonoBehaviour
         Item item = slot.currentItem.GetComponent<Item>();
         if (item != null && item.isUsable)
         {
-            item.Use(); // เรียกใช้ฟังก์ชันภายในไอเทม (จะเพิ่ม HP/energy จริงใน Player)
+            item.Use();
 
-            // ✅ หลังใช้ → sync ค่ากับ GameManager
+            // Sync ค่า HP/Energy กับ GameManager
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
@@ -226,7 +231,7 @@ public class InventoryController : MonoBehaviour
             }
 
             slot.UpdateStackText();
-            ShowItemInfo(slot); // อัปเดตข้อมูลหลังใช้
+            ShowItemInfo(slot);
         }
     }
     public void ShowItemInfo(ItemSlot slot)

@@ -39,8 +39,16 @@ public class ItemSlot : MonoBehaviour
         Item item = currentItem.GetComponent<Item>();
         if (item != null)
         {
-            stackText.text = item.quantity.ToString();
-            stackText.gameObject.SetActive(true);
+            if (item.quantity > 0)
+            {
+                stackText.text = item.quantity.ToString();
+                stackText.gameObject.SetActive(true);
+            }
+            else
+            {
+                stackText.text = "";
+                stackText.gameObject.SetActive(false);
+            }
         }
     }
 }
