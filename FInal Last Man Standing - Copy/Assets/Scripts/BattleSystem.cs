@@ -33,6 +33,9 @@ public class BattleSystem : MonoBehaviour
     bool bossHealedAtHalf = false;
     bool bossHealedAtQuarter = false;
     private int enemyStunTurns = 0;
+    private int stunCooldown = 0;
+    private const int stunCooldownTurns = 3;
+    public Button stunButton;
 
     void Start()
     {
@@ -113,6 +116,17 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
+        if (enemyStunTurns > 0)
+        {
+            dialogueText.text = enemyUnit.unitName + " is stunned and can't move!";
+            enemyStunTurns--; // ✅ ลดระยะ stun ลง
+            yield return new WaitForSeconds(2f);
+
+            state = BattleState.PLAYERTURN;
+            PlayerTurn();
+            yield break;
+        }
+
         dialogueText.text = enemyUnit.unitName + " attacks!";
         yield return new WaitForSeconds(1f);
 
@@ -328,6 +342,10 @@ public class BattleSystem : MonoBehaviour
     void PlayerTurn()
     {
         hasUsedItemThisTurn = false;
+        if (stunCooldown > 0)
+            stunCooldown--; // ลดคูลดาวน์ stun ทุกเทิร์น
+        if (stunButton != null)
+            stunButton.interactable = stunCooldown <= 0;
         dialogueText.text = "Choose an action";
     }
 
@@ -419,6 +437,7 @@ public class BattleSystem : MonoBehaviour
             StartCoroutine(PlayerAttack(powerfulDamage));
             playerHUD.SetEnergy(playerUnit.currentEnergy);
             dialogueText.text = "You unleashed a POWER ATTACK!";
+            ReturnToCombat();
         }
         else
         {
@@ -431,8 +450,15 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
 
-        int energyCost = 8; // พลังงานที่ใช้
-        int stunDamage = playerUnit.damage / 2; // ดาเมจเบากว่าปกติ
+        if (stunCooldown > 0)
+        {
+            dialogueText.text = "Stun is on cooldown! (" + stunCooldown + " turns left)";
+            StartCoroutine(ResetDialogueText());
+            return;
+        }
+
+        int energyCost = 8;
+        int stunDamage = playerUnit.damage / 2;
 
         if (!playerUnit.UseEnergy(energyCost))
         {
@@ -441,7 +467,10 @@ public class BattleSystem : MonoBehaviour
             return;
         }
 
-        enemyStunTurns = 2; // ✅ สต้น 2 เทิร์น
+        enemyStunTurns = 2;
+        ReturnToCombat();
+        stunCooldown = stunCooldownTurns;
+
         StartCoroutine(StunAttack(stunDamage));
     }
     public void OnHealButton()
