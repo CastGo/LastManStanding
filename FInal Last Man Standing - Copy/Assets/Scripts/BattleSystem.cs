@@ -141,11 +141,13 @@ public class BattleSystem : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
                 StartCoroutine(playerUnit.FlashRed());
+                playerHUD.SetHP(playerUnit.currentHP);
             }
             else
             {
                 isDead = playerUnit.TakeDamage(enemyUnit.damage);
                 StartCoroutine(playerUnit.FlashRed());
+                playerHUD.SetHP(playerUnit.currentHP);
             }
         }
         else if (enemyUnit.CompareTag("Boss"))
@@ -181,11 +183,13 @@ public class BattleSystem : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                     isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
                     StartCoroutine(playerUnit.FlashRed());
+                    playerHUD.SetHP(playerUnit.currentHP);
                 }
                 else
                 {
                     isDead = playerUnit.TakeDamage(enemyUnit.damage);
                     StartCoroutine(playerUnit.FlashRed());
+                    playerHUD.SetHP(playerUnit.currentHP);
                 }
 
                 playerHUD.SetHP(playerUnit.currentHP);

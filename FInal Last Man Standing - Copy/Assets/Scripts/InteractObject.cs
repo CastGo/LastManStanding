@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using TMPro;
 
 public class InteractObject : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class InteractObject : MonoBehaviour
     //public int vendingItemID = -1;
     public int itemPrice = 10; // ราคาไอเทม
     public GameObject itemPrefab; // ดึงจาก Inspector ตาม ID
+    public TMP_Text messageText;
+    public float messageDuration = 2f;
 
     void Start()
     {
@@ -67,29 +70,27 @@ public class InteractObject : MonoBehaviour
                     }
                 }
             }
-            if (isVendingMachine)
+            if (GameManager.instance.gold >= itemPrice)
             {
-                if (GameManager.instance.gold >= itemPrice)
+                if (itemPrefab != null)
                 {
-                    GameManager.instance.SpendGold(itemPrice);
-                    GameManager.instance.UpdateGoldUI();
+                    bool added = inventoryController.AddItem(itemPrefab);
 
-                    if (itemPrefab != null)
+                    if (added)
                     {
-                        GameObject itemInstance = Instantiate(itemPrefab);
-                        bool added = inventoryController.AddItem(itemInstance);
-
-                        if (!added)
-                        {
-                            Destroy(itemInstance); // ถ้าเต็ม ลบทิ้ง
-                        }
+                        GameManager.instance.SpendGold(itemPrice);
+                        GameManager.instance.UpdateGoldUI();
+                        ShowVendingMessage("Item purchased successfully!");
                     }
-
+                    else
+                    {
+                        ShowVendingMessage("Inventory full or item stack maxed!");
+                    }
                 }
-                else
-                {
-                    Debug.Log("Not enough gold!");
-                }
+            }
+            else
+            {
+                ShowVendingMessage("Not enough gold!");
             }
         }
     }
@@ -111,5 +112,20 @@ public class InteractObject : MonoBehaviour
             interactLight.SetActive(false);
         }
     }
-    
+    void ShowVendingMessage(string message)
+    {
+        if (messageText != null)
+        {
+            messageText.text = message;
+            StopAllCoroutines();
+            StartCoroutine(HideVendingMessageAfterDelay());
+        }
+    }
+
+    IEnumerator HideVendingMessageAfterDelay()
+    {
+        messageText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(messageDuration);
+        messageText.gameObject.SetActive(false);
+    }
 }
