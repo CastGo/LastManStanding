@@ -54,4 +54,15 @@ public class Unit : MonoBehaviour
             currentEnergy = maxEnergy;
         }
     }
+    public IEnumerator FlashRed()
+    {
+        SpriteRenderer sprite = GetComponentInChildren<SpriteRenderer>();
+        if (sprite != null)
+        {
+            Color originalColor = sprite.color;
+            sprite.color = Color.red;
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = originalColor;
+        }
+    }
 }

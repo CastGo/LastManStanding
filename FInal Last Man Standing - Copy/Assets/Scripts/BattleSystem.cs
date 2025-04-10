@@ -32,6 +32,7 @@ public class BattleSystem : MonoBehaviour
     int bossTurnCounter = 0;
     bool bossHealedAtHalf = false;
     bool bossHealedAtQuarter = false;
+    private int enemyStunTurns = 0;
 
     void Start()
     {
@@ -69,10 +70,33 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerAttack(int customDamage)
     {
         bool isDead = enemyUnit.TakeDamage(customDamage);
+        StartCoroutine(enemyUnit.FlashRed());
 
         enemyHUD.SetHP(enemyUnit.currentHP);
         dialogueText.text = "The attack is successful!";
 
+        yield return new WaitForSeconds(2f);
+
+        if (isDead)
+        {
+            state = BattleState.WON;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
+    }
+    IEnumerator StunAttack(int damage)
+    {
+        bool isDead = enemyUnit.TakeDamage(damage);
+        StartCoroutine(enemyUnit.FlashRed());
+
+        enemyHUD.SetHP(enemyUnit.currentHP);
+        dialogueText.text = "You stunned the enemy!";
+
+        playerHUD.SetEnergy(playerUnit.currentEnergy);
         yield return new WaitForSeconds(2f);
 
         if (isDead)
@@ -102,10 +126,12 @@ public class BattleSystem : MonoBehaviour
                 dialogueText.text = "MiniBoss uses a POWERFUL ATTACK!";
                 yield return new WaitForSeconds(1f);
                 isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
+                StartCoroutine(playerUnit.FlashRed());
             }
             else
             {
                 isDead = playerUnit.TakeDamage(enemyUnit.damage);
+                StartCoroutine(playerUnit.FlashRed());
             }
         }
         else if (enemyUnit.CompareTag("Boss"))
@@ -140,10 +166,12 @@ public class BattleSystem : MonoBehaviour
                     dialogueText.text = "Boss unleashes a POWER STRIKE!";
                     yield return new WaitForSeconds(1f);
                     isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
+                    StartCoroutine(playerUnit.FlashRed());
                 }
                 else
                 {
                     isDead = playerUnit.TakeDamage(enemyUnit.damage);
+                    StartCoroutine(playerUnit.FlashRed());
                 }
 
                 playerHUD.SetHP(playerUnit.currentHP);
@@ -153,6 +181,7 @@ public class BattleSystem : MonoBehaviour
         {
             // Enemy ปกติ
             isDead = playerUnit.TakeDamage(enemyUnit.damage);
+            StartCoroutine(playerUnit.FlashRed());
             playerHUD.SetHP(playerUnit.currentHP);
         }
 
@@ -396,6 +425,24 @@ public class BattleSystem : MonoBehaviour
             dialogueText.text = "Not enough energy!";
             StartCoroutine(ResetDialogueText());
         }
+    }
+    public void OnStunButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        int energyCost = 8; // พลังงานที่ใช้
+        int stunDamage = playerUnit.damage / 2; // ดาเมจเบากว่าปกติ
+
+        if (!playerUnit.UseEnergy(energyCost))
+        {
+            dialogueText.text = "Not enough energy to Stun!";
+            StartCoroutine(ResetDialogueText());
+            return;
+        }
+
+        enemyStunTurns = 2; // ✅ สต้น 2 เทิร์น
+        StartCoroutine(StunAttack(stunDamage));
     }
     public void OnHealButton()
     {
