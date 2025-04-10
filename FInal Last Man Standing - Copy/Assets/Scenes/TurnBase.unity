@@ -4912,7 +4912,7 @@ Transform:
   m_GameObject: {fileID: 1665433800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.45, y: -1, z: 0}
+  m_LocalPosition: {x: -3.52, y: -4.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6235,6 +6235,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 786864928}
     m_Modifications:
     - target: {fileID: 817625558094350474, guid: c8796479c9c98c345916a35e00a35697, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 817625558094350474, guid: c8796479c9c98c345916a35e00a35697, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 817625558094350474, guid: c8796479c9c98c345916a35e00a35697, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 817625558094350474, guid: c8796479c9c98c345916a35e00a35697, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.4832785
       objectReference: {fileID: 0}
@@ -6276,16 +6288,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2955679264644415304, guid: c8796479c9c98c345916a35e00a35697, type: 3}
       propertyPath: m_Name
-      value: bearded-idle-1
+      value: NormalZombieTurnBase
       objectReference: {fileID: 0}
     - target: {fileID: 2955679264644415304, guid: c8796479c9c98c345916a35e00a35697, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6542874782083779833, guid: c8796479c9c98c345916a35e00a35697, type: 3}
-      propertyPath: curentHP
-      value: 20
-      objectReference: {fileID: 0}
+    - target: {fileID: 8755913715209590053, guid: c8796479c9c98c345916a35e00a35697, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 119ab09907ce9dd4db2c77a0cc7db98e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6305,12 +6317,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 931316230988418314, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 931316230988418314, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 931316230988418314, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.1756
+      objectReference: {fileID: 0}
+    - target: {fileID: 931316230988418314, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.75
+      value: -3.45
       objectReference: {fileID: 0}
     - target: {fileID: 931316230988418314, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.99
+      value: -4.2
       objectReference: {fileID: 0}
     - target: {fileID: 931316230988418314, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6344,16 +6368,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7503237726438844451, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3f5edcd8c0010bc4fa2e6adb849c9b51, type: 3}
     - target: {fileID: 8418266314520985794, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
       propertyPath: m_Name
-      value: hat-man-idle-1
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8418266314520985794, guid: f6efae0e25ab9ed45966d9db5b21c606, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

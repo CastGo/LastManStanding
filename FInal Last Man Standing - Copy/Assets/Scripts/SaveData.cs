@@ -23,6 +23,7 @@ public class SaveData
     public Vector3 playerPosition; // ตำแหน่งของ Player
     public int playerHP; // ค่าพลังชีวิตของ Player
     public int playerEnergy;
+    public int playerGold;
     public List<ZombieSaveData> zombiesData; // รายการข้อมูลของ zombie
     public List<InventorySaveData> inventorySaveData;
     public List<SceneObjectSaveData> sceneObjectData;

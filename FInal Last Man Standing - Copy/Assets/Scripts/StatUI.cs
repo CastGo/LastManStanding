@@ -12,6 +12,7 @@ public class StatUI : MonoBehaviour
 
     void Start()
     {
+        GameManager.instance.UpdateGoldUI();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {

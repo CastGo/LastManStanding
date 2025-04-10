@@ -191,6 +191,7 @@ public class BattleSystem : MonoBehaviour
                     return; // ออกจากฟังก์ชันไม่ต้องไป ReturnAfterWin()
                 }
 
+                StartCoroutine(ReturnAfterWin());
                 // ให้รอหน่อยให้เห็น effect การระเบิด
                 //StartCoroutine(DelayReturnAfterWin());
             }
@@ -211,6 +212,21 @@ public class BattleSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
+        if (enemyUnit.CompareTag("Enemy"))
+        {
+            GameManager.instance.AddGold(10);
+        }
+        else if (enemyUnit.CompareTag("MiniBoss"))
+        {
+            GameManager.instance.AddGold(20);
+        }
+        else if (enemyUnit.CompareTag("Boss"))
+        {
+            GameManager.instance.AddGold(50);
+        }
+
+        GameManager.instance.UpdateGoldUI();
+
         GameManager.instance.savedHP = playerUnit.currentHP;
         GameManager.instance.savedEnergy = playerUnit.currentEnergy;
         // ปิดฉาก TurnBase แต่ไม่เปลี่ยนตำแหน่ง
@@ -221,6 +237,8 @@ public class BattleSystem : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("2-1 Room"));
 
         GameManager.instance.RestoreSceneObjects();
+
+        GameManager.instance.UpdateGoldUI();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)

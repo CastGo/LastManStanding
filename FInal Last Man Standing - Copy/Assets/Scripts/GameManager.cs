@@ -4,6 +4,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 [System.Serializable]
 public class SceneObjectTempData
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
     private Vector3 playerPosition; // บันทึกตำแหน่ง Player
     private Scene previousScene;
 
+    public int gold = 0;
+    public TMP_Text goldText;
     public int savedHP;
     public int savedMaxHP;
     public int savedEnergy; 
@@ -221,5 +224,27 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+    public void AddGold(int amount)
+    {
+        gold += amount;
+        UpdateGoldUI();
+    }
+
+    public bool SpendGold(int amount)
+    {
+        if (gold >= amount)
+        {
+            gold -= amount;
+            UpdateGoldUI();
+            return true;
+        }
+        return false;
+    }
+
+    public void UpdateGoldUI()
+    {
+        if (goldText != null)
+            goldText.text = "¥ " + gold.ToString();
     }
 }
