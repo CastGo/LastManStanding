@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
@@ -15,6 +15,10 @@ public class InteractObject : MonoBehaviour
     public GameObject interactLight;
     private bool playerInRange;
     private InventoryController inventoryController;
+    public bool isVendingMachine = false;
+    //public int vendingItemID = -1;
+    public int itemPrice = 10; // ราคาไอเทม
+    public GameObject itemPrefab; // ดึงจาก Inspector ตาม ID
 
     void Start()
     {
@@ -61,6 +65,30 @@ public class InteractObject : MonoBehaviour
                     {
                         player.transform.position = teleportDestination.position;
                     }
+                }
+            }
+            if (isVendingMachine)
+            {
+                if (GameManager.instance.gold >= itemPrice)
+                {
+                    GameManager.instance.SpendGold(itemPrice);
+                    GameManager.instance.UpdateGoldUI();
+
+                    if (itemPrefab != null)
+                    {
+                        GameObject itemInstance = Instantiate(itemPrefab);
+                        bool added = inventoryController.AddItem(itemInstance);
+
+                        if (!added)
+                        {
+                            Destroy(itemInstance); // ถ้าเต็ม ลบทิ้ง
+                        }
+                    }
+
+                }
+                else
+                {
+                    Debug.Log("Not enough gold!");
                 }
             }
         }

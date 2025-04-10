@@ -76,6 +76,9 @@ public class SaveController : MonoBehaviour
         Unit playerUnit = playerObject.GetComponent<Unit>();
         if (playerUnit == null) return;
 
+        playerUnit.currentEnergy = playerUnit.maxEnergy;
+        GameManager.instance.savedEnergy = playerUnit.maxEnergy;
+
         SaveData saveData = new SaveData
         {
             playerPosition = playerObject.transform.position,
