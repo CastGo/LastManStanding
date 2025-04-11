@@ -224,7 +224,7 @@ public class BattleSystem : MonoBehaviour
             // 💥 ตรวจสอบว่าเป็น MiniBoss แล้วให้ระเบิดใส่ผู้เล่น
             if (enemyUnit.CompareTag("MiniBoss"))
             {
-                int explosionDamage = 15; // หรือจะตั้งไว้ในตัวแปรก็ได้
+                int explosionDamage = 5; // หรือจะตั้งไว้ในตัวแปรก็ได้
                 dialogueText.text = "MiniBoss explodes!";
                 bool playerDied = playerUnit.TakeDamage(explosionDamage);
                 playerHUD.SetHP(playerUnit.currentHP);

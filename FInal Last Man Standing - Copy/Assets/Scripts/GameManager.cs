@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject currentZombie;
     public bool isLoadingFromSave = false;
     public bool sceneWasDisabled = false;
+    private bool isLoadingBattleScene = false;
     public HashSet<string> deactivatedZombies = new HashSet<string>();
     public GameObject normalZombieTurnBase;
     public GameObject miniBossTurnBase;
@@ -53,6 +54,9 @@ public class GameManager : MonoBehaviour
 
     public void LoadTurnBase(Transform player, GameObject zombie)
     {
+        if (isLoadingBattleScene) return; // ➕ ป้องกันไม่ให้โหลดซ้ำ
+        isLoadingBattleScene = true;      // ✅ mark ว่ากำลังโหลด
+
         playerPosition = player.position;
         previousScene = SceneManager.GetActiveScene();
         currentZombie = zombie;
@@ -60,6 +64,7 @@ public class GameManager : MonoBehaviour
         switch (zombie.tag)
         {
             case "Enemy":
+            case "resetzombie":
                 nextEnemyPrefab = normalZombieTurnBase;
                 break;
             case "MiniBoss":
@@ -113,6 +118,8 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
+
+        isLoadingBattleScene = false;
 
         SetSceneActive(previousScene, true);
         SceneManager.SetActiveScene(previousScene);

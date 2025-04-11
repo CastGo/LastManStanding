@@ -59,6 +59,31 @@ public class InteractObject : MonoBehaviour
 
             if (interact.CompareTag("door"))
             {
+                // ตรวจสอบ item ID 4 และ 5
+                bool hasItem4 = HasItemWithID(4);
+                bool hasItem5 = HasItemWithID(5);
+
+                if (hasItem4 && hasItem5)
+                {
+                    // ปิด NPCStudent
+                    GameObject[] students = GameObject.FindGameObjectsWithTag("NPCStudent");
+                    foreach (GameObject npc in students)
+                        npc.SetActive(false);
+
+                    // เปิด MiniBoss
+                    GameObject[] miniBosses = GameObject.FindGameObjectsWithTag("MiniBoss");
+                    foreach (GameObject boss in miniBosses)
+                        boss.SetActive(true);
+                }
+                GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+                foreach (GameObject zombies in allObjects)
+                {
+                    if (zombies.CompareTag("resetzombie") && zombies.scene.name == "2-1 Room")
+                    {
+                        zombies.SetActive(true);
+                    }
+                }
+
                 confiner.m_BoundingShape2D = map;
                 TeleportPlayer();
             }
@@ -73,7 +98,6 @@ public class InteractObject : MonoBehaviour
 
                 RemoveItemByID(8);
 
-                // ✅ เล่นเอฟเฟคระเบิดจาก Boom001
                 Transform boom = interact.transform.Find("Boom001");
                 if (boom != null)
                 {
@@ -93,15 +117,6 @@ public class InteractObject : MonoBehaviour
                     return;
                 }
 
-                if (HasItemWithID(8))
-                {
-                    GameObject[] npcStudents = GameObject.FindGameObjectsWithTag("NPCStudent");
-                    foreach (GameObject npc in npcStudents)
-                    {
-                        npc.SetActive(false);
-                    }
-                }
-
                 confiner.m_BoundingShape2D = map;
                 TeleportPlayer();
             }
@@ -117,7 +132,6 @@ public class InteractObject : MonoBehaviour
                 confiner.m_BoundingShape2D = map;
                 TeleportPlayer();
             }
-
             if (interact.CompareTag("NPCStudent"))
             {
                 bool hasBattery = HasItemWithID(4);
@@ -134,21 +148,63 @@ public class InteractObject : MonoBehaviour
                     if (bombPrefab != null)
                     {
                         bool added = inventoryController.AddItem(bombPrefab);
-                        if (added)
-                            ShowVendingMessage("You received a bomb!");
-                        else
-                            ShowVendingMessage("Inventory full, couldn't add bomb.");
+                        ShowVendingMessage(added ? "You received a bomb!" : "Inventory full, couldn't add bomb.");
                     }
 
                     GameObject[] miniBosses = GameObject.FindGameObjectsWithTag("MiniBoss");
                     foreach (GameObject boss in miniBosses)
-                    {
                         boss.SetActive(true);
-                    }
                 }
                 else
                 {
                     ShowVendingMessage("You need battery, sugar, and KNO3 to make a bomb.");
+                }
+            }
+            if (interact.CompareTag("workstation"))
+            {
+                bool hasBattery = HasItemWithID(4);
+                bool hasSugar = HasItemWithID(5);
+                bool hasKNO3 = HasItemWithID(6);
+
+                if (hasBattery && hasSugar && hasKNO3)
+                {
+                    RemoveItemByID(4);
+                    RemoveItemByID(5);
+                    RemoveItemByID(6);
+
+                    GameObject bombPrefab = itemDictionary.GetItemPrefab(8);
+                    if (bombPrefab != null)
+                    {
+                        bool added = inventoryController.AddItem(bombPrefab);
+                        ShowVendingMessage(added ? "You received a bomb!" : "Inventory full, couldn't add bomb.");
+                    }
+
+                    GameObject[] miniBosses = GameObject.FindGameObjectsWithTag("MiniBoss");
+                    foreach (GameObject boss in miniBosses)
+                        boss.SetActive(true);
+                }
+                else
+                {
+                    ShowVendingMessage("You need battery, sugar, and KNO3 to make a bomb.");
+                }
+            }
+            if (interact.CompareTag("janitor"))
+            {
+                int sushiCount = GetItemQuantity(1);
+                if (sushiCount >= 3)
+                {
+                    RemoveItemByID(1, 3);
+
+                    GameObject keyPrefab = itemDictionary.GetItemPrefab(7);
+                    if (keyPrefab != null)
+                    {
+                        bool added = inventoryController.AddItem(keyPrefab);
+                        ShowVendingMessage(added ? "You received a key from the janitor!" : "Inventory full, can't get the key.");
+                    }
+                }
+                else
+                {
+                    ShowVendingMessage("You need 3 sushi to trade for a key.");
                 }
             }
 
@@ -159,7 +215,6 @@ public class InteractObject : MonoBehaviour
                     if (itemPrefab != null)
                     {
                         bool added = inventoryController.AddItem(itemPrefab);
-
                         if (added)
                         {
                             GameManager.instance.SpendGold(itemPrice);
@@ -244,7 +299,25 @@ public class InteractObject : MonoBehaviour
         return false;
     }
 
-    private void RemoveItemByID(int itemID)
+    private int GetItemQuantity(int id)
+    {
+        int total = 0;
+        foreach (Transform slotTransform in inventoryController.slotPanel.transform)
+        {
+            ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
+            if (slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item != null && item.ID == id)
+                {
+                    total += item.quantity;
+                }
+            }
+        }
+        return total;
+    }
+
+    private void RemoveItemByID(int itemID, int count = 1)
     {
         foreach (Transform slotTransform in inventoryController.slotPanel.transform)
         {
@@ -254,7 +327,8 @@ public class InteractObject : MonoBehaviour
                 Item item = slot.currentItem.GetComponent<Item>();
                 if (item != null && item.ID == itemID)
                 {
-                    item.quantity--;
+                    int removeAmount = Mathf.Min(count, item.quantity);
+                    item.quantity -= removeAmount;
                     slot.UpdateStackText();
 
                     if (item.quantity <= 0)

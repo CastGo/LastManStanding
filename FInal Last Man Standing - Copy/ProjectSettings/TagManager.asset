@@ -15,6 +15,9 @@ TagManager:
   - keydoor
   - NPCStudent
   - BombDoor
+  - janitor
+  - resetzombie
+  - workstation
   layers:
   - Default
   - TransparentFX
