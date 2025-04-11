@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         {
             if (obj.scene.IsValid() && obj.scene.name == "2-1 Room")
             {
-                if (obj.CompareTag("item") || obj.CompareTag("NPCStudent") || obj.CompareTag("resetzombie") || obj.CompareTag("MiniBoss"))
+                if (obj.CompareTag("item") || obj.CompareTag("NPCStudent") || obj.CompareTag("resetzombie") || obj.CompareTag("MiniBoss") || obj.CompareTag("Boss"))
                 {
                     sceneObjectStates.Add(new SceneObjectTempData
                     {

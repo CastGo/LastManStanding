@@ -61,6 +61,7 @@ public class InteractObject : MonoBehaviour
             {
                 bool hasItem4 = HasItemWithID(4);
                 bool hasItem5 = HasItemWithID(5);
+                bool hasCutter = HasItemWithID(10);
 
                 if (hasItem4 && hasItem5)
                 {
@@ -69,9 +70,9 @@ public class InteractObject : MonoBehaviour
                     foreach (GameObject npc in students)
                         npc.SetActive(false);
 
-                    // เปิด MiniBoss เฉพาะเมื่อมี ID 4 และ 5
-                    GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-                    foreach (GameObject boss in allObjects)
+                    // ✅ เปิด MiniBoss
+                    GameObject[] miniBosses = Resources.FindObjectsOfTypeAll<GameObject>();
+                    foreach (GameObject boss in miniBosses)
                     {
                         if (boss.CompareTag("MiniBoss") && boss.scene.name == "2-1 Room")
                         {
@@ -80,7 +81,20 @@ public class InteractObject : MonoBehaviour
                     }
                 }
 
-                // เปิด resetzombie เสมอ ไม่ว่า player จะมีไอเทมหรือไม่
+                if (hasCutter)
+                {
+                    // ✅ เปิด Boss
+                    GameObject[] bossObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+                    foreach (GameObject boss in bossObjects)
+                    {
+                        if (boss.CompareTag("Boss") && boss.scene.name == "2-1 Room")
+                        {
+                            boss.SetActive(true);
+                        }
+                    }
+                }
+
+                // เปิด resetzombie เสมอ
                 GameObject[] allObjectsForZombie = Resources.FindObjectsOfTypeAll<GameObject>();
                 foreach (GameObject zombie in allObjectsForZombie)
                 {
