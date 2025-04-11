@@ -38,7 +38,8 @@ public class InteractObject : MonoBehaviour
             {
                 SaveController saveController = FindObjectOfType<SaveController>();
                 if (saveController != null) 
-                { 
+                {
+                    ShowVendingMessage("Saved");
                     saveController.SaveGame();
                 }
             }

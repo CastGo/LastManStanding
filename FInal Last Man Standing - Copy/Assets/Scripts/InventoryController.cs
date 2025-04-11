@@ -10,6 +10,8 @@ public class InventoryController : MonoBehaviour
     private ItemDictionary itemDictionary;
     [HideInInspector] public ItemSlot selectedSlot;
 
+    public GameObject menuPanel;
+    public GameObject mapPanel;
     public GameObject inventoryPanel;
     public GameObject slotPanel;
     public GameObject slotPrefab;
@@ -93,9 +95,10 @@ public class InventoryController : MonoBehaviour
     public bool AddItem(GameObject itemPrefab)
     {
         Item newItemData = itemPrefab.GetComponent<Item>();
+
         if (newItemData.isStackable)
         {
-            // 🔁 หา slot ที่มีไอเทมเดียวกัน
+            // 🔁 หา slot ที่ stack ได้
             foreach (Transform slotTransform in slotPanel.transform)
             {
                 ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
@@ -112,7 +115,7 @@ public class InventoryController : MonoBehaviour
             }
         }
 
-        // ถ้า stack ไม่ได้ หรือยังไม่มีใน inventory → หา slot ว่าง
+        // ✅ หา slot ว่าง
         foreach (Transform slotTransform in slotPanel.transform)
         {
             ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
@@ -130,7 +133,8 @@ public class InventoryController : MonoBehaviour
             }
         }
 
-        Debug.Log("Inventory is full!");
+        // ❌ เต็มทุกช่อง หรือ stack เต็มหมด
+        Debug.Log("Inventory is full or cannot stack this item.");
         return false;
     }
     public List<InventorySaveData> GetInventoryItems()
