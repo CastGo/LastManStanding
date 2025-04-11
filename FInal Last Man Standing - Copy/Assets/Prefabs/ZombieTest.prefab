@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facingLeft: 0
-  moveSpeed: 0.5
+  moveSpeed: 0.3
   isWalking: 0
   walkTime: 4
   walkCounter: 0

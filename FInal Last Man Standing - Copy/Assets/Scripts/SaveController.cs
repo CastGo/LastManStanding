@@ -43,13 +43,18 @@ public class SaveController : MonoBehaviour
 
         foreach (GameObject obj in allSceneObjects)
         {
-            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room" && obj.CompareTag("item"))
+            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room")
             {
-                sceneObjects.Add(new SceneObjectSaveData
+                if (obj.CompareTag("item") || obj.CompareTag("BombDoor"))
                 {
-                    objectName = obj.name,
-                    isActive = obj.activeSelf
-                });
+                    sceneObjects.Add(new SceneObjectSaveData
+                    {
+                        objectName = obj.name,
+                        isActive = obj.activeSelf,
+                        objectTag = obj.tag,
+                        position = obj.transform.position
+                    });
+                }
             }
         }
 
@@ -58,7 +63,7 @@ public class SaveController : MonoBehaviour
 
         foreach (GameObject zombie in allObjects)
         {
-            if ((zombie.CompareTag("Enemy") || zombie.CompareTag("MiniBoss") || zombie.CompareTag("Boss")) &&
+            if ((zombie.CompareTag("Enemy") || zombie.CompareTag("MiniBoss") || zombie.CompareTag("Boss") || zombie.CompareTag("NPCStudent")) &&
                 zombie.scene.IsValid() && zombie.scene.name == "2-1 Room")
             {
                 zombiesData.Add(new ZombieSaveData
@@ -112,7 +117,6 @@ public class SaveController : MonoBehaviour
             GameManager.instance.gold = saveData.playerGold;
             GameManager.instance.UpdateGoldUI();
 
-            // ✅ อัปเดต Confiner ให้ตาม Player
             UpdateCameraConfinerToClosest(player.GetComponent<Collider2D>());
         }
 
@@ -120,6 +124,7 @@ public class SaveController : MonoBehaviour
         allZombies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         allZombies.AddRange(GameObject.FindGameObjectsWithTag("MiniBoss"));
         allZombies.AddRange(GameObject.FindGameObjectsWithTag("Boss"));
+        allZombies.AddRange(GameObject.FindGameObjectsWithTag("NPCStudent"));
 
         foreach (ZombieSaveData zombieData in saveData.zombiesData)
         {
@@ -135,18 +140,29 @@ public class SaveController : MonoBehaviour
             }
         }
 
+        GameObject[] allSceneObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
         foreach (SceneObjectSaveData objData in saveData.sceneObjectData)
         {
-            GameObject[] allSceneObjects = Resources.FindObjectsOfTypeAll<GameObject>();
             foreach (GameObject obj in allSceneObjects)
             {
                 if (obj.scene.IsValid() && obj.scene.name == "2-1 Room" && obj.name == objData.objectName)
                 {
-                    obj.SetActive(objData.isActive);
-                    InteractObject interactObj = obj.GetComponent<InteractObject>();
-                    if (interactObj != null && interactObj.interact2 != null)
-                        interactObj.interact2.SetActive(objData.isActive);
-                    break;
+                    if (Vector3.Distance(obj.transform.position, objData.position) < 0.1f)
+                    {
+                        obj.SetActive(objData.isActive);
+
+                        if (!string.IsNullOrEmpty(objData.objectTag))
+                        {
+                            obj.tag = objData.objectTag;
+                        }
+
+                        InteractObject interactObj = obj.GetComponent<InteractObject>();
+                        if (interactObj != null && interactObj.interact2 != null)
+                            interactObj.interact2.SetActive(objData.isActive);
+
+                        break;
+                    }
                 }
             }
         }
@@ -154,7 +170,6 @@ public class SaveController : MonoBehaviour
         inventoryController.SetInventoryItems(saveData.inventorySaveData);
     }
 
-    // ✅ เพิ่มฟังก์ชันนี้ไว้ด้านล่าง
     void UpdateCameraConfinerToClosest(Collider2D playerCollider)
     {
         CinemachineConfiner confiner = FindAnyObjectByType<CinemachineConfiner>();
@@ -178,10 +193,11 @@ public class SaveController : MonoBehaviour
         {
             confiner.m_BoundingShape2D = closest;
 
-            // รีเฟรชกล้อง
             var shape = confiner.m_BoundingShape2D;
             confiner.m_BoundingShape2D = null;
             confiner.m_BoundingShape2D = shape;
         }
     }
 }
+
+

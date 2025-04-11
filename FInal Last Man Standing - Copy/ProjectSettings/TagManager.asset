@@ -11,6 +11,10 @@ TagManager:
   - Enemy
   - MiniBoss
   - Boss
+  - window
+  - keydoor
+  - NPCStudent
+  - BombDoor
   layers:
   - Default
   - TransparentFX

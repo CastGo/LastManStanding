@@ -6,8 +6,7 @@ using TMPro;
 
 public class InteractObject : MonoBehaviour
 {
-    [SerializeField]
-    PolygonCollider2D map;
+    [SerializeField] PolygonCollider2D map;
     CinemachineConfiner confiner;
     public Transform teleportDestination;
 
@@ -17,40 +16,39 @@ public class InteractObject : MonoBehaviour
     private bool playerInRange;
     private InventoryController inventoryController;
     public bool isVendingMachine = false;
-    //public int vendingItemID = -1;
-    public int itemPrice = 10; // ราคาไอเทม
-    public GameObject itemPrefab; // ดึงจาก Inspector ตาม ID
+    public int itemPrice = 10;
+    public GameObject itemPrefab;
     public TMP_Text messageText;
     public float messageDuration = 2f;
+    private ItemDictionary itemDictionary;
 
     void Start()
     {
         confiner = FindAnyObjectByType<CinemachineConfiner>();
         inventoryController = FindObjectOfType<InventoryController>();
+        itemDictionary = FindObjectOfType<ItemDictionary>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && playerInRange)
-        {      
+        if (Input.GetKeyDown(KeyCode.E) && playerInRange)
+        {
             if (interact.CompareTag("savepoint"))
             {
                 SaveController saveController = FindObjectOfType<SaveController>();
-                if (saveController != null) 
+                if (saveController != null)
                 {
                     ShowVendingMessage("Saved");
                     saveController.SaveGame();
                 }
             }
+
             if (interact.CompareTag("item"))
             {
                 Item item = interact.GetComponent<Item>();
                 if (item != null)
                 {
-                    //Add item inventory
                     bool itemAdded = inventoryController.AddItem(interact.gameObject);
-
                     if (itemAdded)
                     {
                         interact.SetActive(false);
@@ -58,42 +56,58 @@ public class InteractObject : MonoBehaviour
                     }
                 }
             }
+
             if (interact.CompareTag("door"))
             {
                 confiner.m_BoundingShape2D = map;
-                
-                if (teleportDestination != null)
-                {
-                    GameObject player = GameObject.FindGameObjectWithTag("Player");
-                    if (player != null)
-                    {
-                        player.transform.position = teleportDestination.position;
-                    }
-                }
+                TeleportPlayer();
             }
+
+            if (interact.CompareTag("BombDoor"))
+            {
+                if (!HasItemWithID(8))
+                {
+                    ShowVendingMessage("You need a bomb to open this door.");
+                    return;
+                }
+
+                RemoveItemByID(8);
+
+                // ✅ เล่นเอฟเฟคระเบิดจาก Boom001
+                Transform boom = interact.transform.Find("Boom001");
+                if (boom != null)
+                {
+                    boom.gameObject.SetActive(true);
+                    StartCoroutine(DisableObjectAfterSeconds(boom.gameObject, 2f));
+                }
+
+                interactLight.SetActive(false);
+                StartCoroutine(ChangeToDoorAfterDelay(interact, 1.5f));
+            }
+
             if (interact.CompareTag("keydoor"))
             {
-                // ถ้าต้องการกุญแจ (ID = 7)
                 if (!HasItemWithID(7))
                 {
                     ShowVendingMessage("You need a key to open this door.");
                     return;
                 }
 
-                confiner.m_BoundingShape2D = map;
-
-                if (teleportDestination != null)
+                if (HasItemWithID(8))
                 {
-                    GameObject player = GameObject.FindGameObjectWithTag("Player");
-                    if (player != null)
+                    GameObject[] npcStudents = GameObject.FindGameObjectsWithTag("NPCStudent");
+                    foreach (GameObject npc in npcStudents)
                     {
-                        player.transform.position = teleportDestination.position;
+                        npc.SetActive(false);
                     }
                 }
+
+                confiner.m_BoundingShape2D = map;
+                TeleportPlayer();
             }
+
             if (interact.CompareTag("window"))
             {
-                // ถ้าต้องการกุญแจ (ID = 7)
                 if (!HasItemWithID(9))
                 {
                     ShowVendingMessage("You need a rope to go 2-3 room.");
@@ -101,16 +115,43 @@ public class InteractObject : MonoBehaviour
                 }
 
                 confiner.m_BoundingShape2D = map;
+                TeleportPlayer();
+            }
 
-                if (teleportDestination != null)
+            if (interact.CompareTag("NPCStudent"))
+            {
+                bool hasBattery = HasItemWithID(4);
+                bool hasSugar = HasItemWithID(5);
+                bool hasKNO3 = HasItemWithID(6);
+
+                if (hasBattery && hasSugar && hasKNO3)
                 {
-                    GameObject player = GameObject.FindGameObjectWithTag("Player");
-                    if (player != null)
+                    RemoveItemByID(4);
+                    RemoveItemByID(5);
+                    RemoveItemByID(6);
+
+                    GameObject bombPrefab = itemDictionary.GetItemPrefab(8);
+                    if (bombPrefab != null)
                     {
-                        player.transform.position = teleportDestination.position;
+                        bool added = inventoryController.AddItem(bombPrefab);
+                        if (added)
+                            ShowVendingMessage("You received a bomb!");
+                        else
+                            ShowVendingMessage("Inventory full, couldn't add bomb.");
+                    }
+
+                    GameObject[] miniBosses = GameObject.FindGameObjectsWithTag("MiniBoss");
+                    foreach (GameObject boss in miniBosses)
+                    {
+                        boss.SetActive(true);
                     }
                 }
+                else
+                {
+                    ShowVendingMessage("You need battery, sugar, and KNO3 to make a bomb.");
+                }
             }
+
             if (isVendingMachine)
             {
                 if (GameManager.instance.gold >= itemPrice)
@@ -139,9 +180,21 @@ public class InteractObject : MonoBehaviour
         }
     }
 
+    void TeleportPlayer()
+    {
+        if (teleportDestination != null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                player.transform.position = teleportDestination.position;
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             playerInRange = true;
             interactLight.SetActive(true);
@@ -150,12 +203,13 @@ public class InteractObject : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             playerInRange = false;
             interactLight.SetActive(false);
         }
     }
+
     void ShowVendingMessage(string message)
     {
         if (messageText != null)
@@ -172,6 +226,7 @@ public class InteractObject : MonoBehaviour
         yield return new WaitForSeconds(messageDuration);
         messageText.gameObject.SetActive(false);
     }
+
     private bool HasItemWithID(int id)
     {
         foreach (Transform slotTransform in inventoryController.slotPanel.transform)
@@ -187,5 +242,41 @@ public class InteractObject : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void RemoveItemByID(int itemID)
+    {
+        foreach (Transform slotTransform in inventoryController.slotPanel.transform)
+        {
+            ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
+            if (slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item != null && item.ID == itemID)
+                {
+                    item.quantity--;
+                    slot.UpdateStackText();
+
+                    if (item.quantity <= 0)
+                    {
+                        Destroy(slot.currentItem);
+                        slot.currentItem = null;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    IEnumerator ChangeToDoorAfterDelay(GameObject bombDoor, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        bombDoor.tag = "door";
+    }
+
+    IEnumerator DisableObjectAfterSeconds(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        obj.SetActive(false);
     }
 }

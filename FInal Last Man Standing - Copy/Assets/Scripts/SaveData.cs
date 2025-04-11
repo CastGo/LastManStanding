@@ -7,6 +7,8 @@ public class SceneObjectSaveData
 {
     public string objectName;      // ใช้ name ของ GameObject เพื่อระบุตัวตน
     public bool isActive;          // บันทึกว่า active ไหม
+    public string objectTag;
+    public Vector3 position;
 }
 
 [System.Serializable]
