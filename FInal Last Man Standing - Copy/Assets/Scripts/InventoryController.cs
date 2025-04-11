@@ -20,31 +20,81 @@ public class InventoryController : MonoBehaviour
     public int slotCount;
     public GameObject[] itemPrefabs;
     private bool isInventoryOpen = false;
+    private bool isMapOpen = false;
+    private bool isMainMenuOpen = false;
 
     // Start is called before the first frame update
     void Start()
     {
         itemDictionary = FindAnyObjectByType<ItemDictionary>();
         inventoryPanel.SetActive(false);
+        mapPanel.SetActive(false);
+        menuPanel.SetActive(false);
 
         CreateEmptySlots();
     }
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.B))
+        // Toggle Main Menu
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
-            isInventoryOpen = !isInventoryOpen;
-            inventoryPanel.SetActive(isInventoryOpen);
+            isMainMenuOpen = !isMainMenuOpen;
+            menuPanel.SetActive(isMainMenuOpen);
+
+            Time.timeScale = isMainMenuOpen ? 0f : 1f;
+
+            if (isMainMenuOpen)
+            {
+                if (isInventoryOpen)
+                {
+                    isInventoryOpen = false;
+                    inventoryPanel.SetActive(false);
+                }
+
+                if (isMapOpen)
+                {
+                    isMapOpen = false;
+                    mapPanel.SetActive(false);
+                }
+            }
         }
 
-        // ✅ ตรวจสอบคลิกซ้ายหรือขวา แล้วส่งค่าไปยัง DetectSlotClick
-        if (Input.GetMouseButtonDown(0) && isInventoryOpen)
+        // Only allow inventory/map when main menu is closed
+        if (!isMainMenuOpen)
         {
-            DetectSlotClick(false); // คลิกซ้าย
-        }
-        else if (Input.GetMouseButtonDown(1) && isInventoryOpen)
-        {
-            DetectSlotClick(true); // คลิกขวา
+            if (Input.GetKeyUp(KeyCode.B))
+            {
+                isInventoryOpen = !isInventoryOpen;
+                inventoryPanel.SetActive(isInventoryOpen);
+
+                if (isInventoryOpen && isMapOpen)
+                {
+                    isMapOpen = false;
+                    mapPanel.SetActive(false);
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.M))
+            {
+                isMapOpen = !isMapOpen;
+                mapPanel.SetActive(isMapOpen);
+
+                if (isMapOpen && isInventoryOpen)
+                {
+                    isInventoryOpen = false;
+                    inventoryPanel.SetActive(false);
+                }
+            }
+
+            // Slot Click (Only when inventory is open)
+            if (Input.GetMouseButtonDown(0) && isInventoryOpen)
+            {
+                DetectSlotClick(false); // Left Click
+            }
+            else if (Input.GetMouseButtonDown(1) && isInventoryOpen)
+            {
+                DetectSlotClick(true); // Right Click
+            }
         }
     }
     private void DetectSlotClick(bool isRightClick)
@@ -255,5 +305,11 @@ public class InventoryController : MonoBehaviour
     {
         itemNameText.text = "";
         itemDescriptionText.text = "";
+    }
+    public void ResumeGame()
+    {
+        isMainMenuOpen = false;
+        menuPanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

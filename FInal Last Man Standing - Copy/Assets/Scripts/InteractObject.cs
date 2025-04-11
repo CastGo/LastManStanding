@@ -71,27 +71,70 @@ public class InteractObject : MonoBehaviour
                     }
                 }
             }
-            if (GameManager.instance.gold >= itemPrice)
+            if (interact.CompareTag("keydoor"))
             {
-                if (itemPrefab != null)
+                // ถ้าต้องการกุญแจ (ID = 7)
+                if (!HasItemWithID(7))
                 {
-                    bool added = inventoryController.AddItem(itemPrefab);
+                    ShowVendingMessage("You need a key to open this door.");
+                    return;
+                }
 
-                    if (added)
+                confiner.m_BoundingShape2D = map;
+
+                if (teleportDestination != null)
+                {
+                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    if (player != null)
                     {
-                        GameManager.instance.SpendGold(itemPrice);
-                        GameManager.instance.UpdateGoldUI();
-                        ShowVendingMessage("Item purchased successfully!");
-                    }
-                    else
-                    {
-                        ShowVendingMessage("Inventory full or item stack maxed!");
+                        player.transform.position = teleportDestination.position;
                     }
                 }
             }
-            else
+            if (interact.CompareTag("window"))
             {
-                ShowVendingMessage("Not enough gold!");
+                // ถ้าต้องการกุญแจ (ID = 7)
+                if (!HasItemWithID(9))
+                {
+                    ShowVendingMessage("You need a rope to go 2-3 room.");
+                    return;
+                }
+
+                confiner.m_BoundingShape2D = map;
+
+                if (teleportDestination != null)
+                {
+                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    if (player != null)
+                    {
+                        player.transform.position = teleportDestination.position;
+                    }
+                }
+            }
+            if (isVendingMachine)
+            {
+                if (GameManager.instance.gold >= itemPrice)
+                {
+                    if (itemPrefab != null)
+                    {
+                        bool added = inventoryController.AddItem(itemPrefab);
+
+                        if (added)
+                        {
+                            GameManager.instance.SpendGold(itemPrice);
+                            GameManager.instance.UpdateGoldUI();
+                            ShowVendingMessage("Item purchased successfully!");
+                        }
+                        else
+                        {
+                            ShowVendingMessage("Inventory full or item stack maxed!");
+                        }
+                    }
+                }
+                else
+                {
+                    ShowVendingMessage("Not enough yen!");
+                }
             }
         }
     }
@@ -128,5 +171,21 @@ public class InteractObject : MonoBehaviour
         messageText.gameObject.SetActive(true);
         yield return new WaitForSeconds(messageDuration);
         messageText.gameObject.SetActive(false);
+    }
+    private bool HasItemWithID(int id)
+    {
+        foreach (Transform slotTransform in inventoryController.slotPanel.transform)
+        {
+            ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
+            if (slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item != null && item.ID == id && item.quantity > 0)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -15,27 +15,27 @@ public class SaveController : MonoBehaviour
 {
     public static SaveController instance;
     public GameObject zombiePrefab;
-    public List<ZombiePrefabEntry> zombiePrefabs; // ลาก prefab เข้า Inspector
+    public List<ZombiePrefabEntry> zombiePrefabs;
 
     private string saveLocation;
     private InventoryController inventoryController;
+
     void Start()
     {
         if (instance == null)
         {
-            instance = this; // สร้าง Instance ถ้ายังไม่มี
-            DontDestroyOnLoad(gameObject); // ให้ SaveController ไม่ถูกทำลายเมื่อโหลดฉากใหม่
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // ถ้ามี Instance แล้วให้ทำลายตัวนี้
+            Destroy(gameObject);
         }
 
         saveLocation = Path.Combine(Application.persistentDataPath, "saveData.json");
         inventoryController = FindAnyObjectByType<InventoryController>();
-
-        
     }
+
     public void SaveGame()
     {
         List<SceneObjectSaveData> sceneObjects = new List<SceneObjectSaveData>();
@@ -84,7 +84,7 @@ public class SaveController : MonoBehaviour
             playerPosition = playerObject.transform.position,
             playerHP = GameManager.instance.savedHP,
             playerEnergy = GameManager.instance.savedEnergy,
-            playerGold = GameManager.instance.gold, // ✅ บันทึกจำนวนเงิน
+            playerGold = GameManager.instance.gold,
             zombiesData = zombiesData,
             inventorySaveData = inventoryController.GetInventoryItems(),
             sceneObjectData = sceneObjects
@@ -106,10 +106,14 @@ public class SaveController : MonoBehaviour
             player.transform.position = saveData.playerPosition;
             player.GetComponent<Unit>().currentHP = saveData.playerHP;
             player.GetComponent<Unit>().currentEnergy = saveData.playerEnergy;
+
             GameManager.instance.savedHP = saveData.playerHP;
             GameManager.instance.savedEnergy = saveData.playerEnergy;
-            GameManager.instance.gold = saveData.playerGold; // ✅ โหลดเงิน
-            GameManager.instance.UpdateGoldUI(); // ✅ อัปเดต UI ทันทีถ้าอยู่ใน scene ที่มี goldText
+            GameManager.instance.gold = saveData.playerGold;
+            GameManager.instance.UpdateGoldUI();
+
+            // ✅ อัปเดต Confiner ให้ตาม Player
+            UpdateCameraConfinerToClosest(player.GetComponent<Collider2D>());
         }
 
         List<GameObject> allZombies = new List<GameObject>();
@@ -148,5 +152,36 @@ public class SaveController : MonoBehaviour
         }
 
         inventoryController.SetInventoryItems(saveData.inventorySaveData);
+    }
+
+    // ✅ เพิ่มฟังก์ชันนี้ไว้ด้านล่าง
+    void UpdateCameraConfinerToClosest(Collider2D playerCollider)
+    {
+        CinemachineConfiner confiner = FindAnyObjectByType<CinemachineConfiner>();
+        if (confiner == null || playerCollider == null) return;
+
+        PolygonCollider2D[] allPolygons = FindObjectsOfType<PolygonCollider2D>();
+        float closestDistance = float.MaxValue;
+        PolygonCollider2D closest = null;
+
+        foreach (PolygonCollider2D poly in allPolygons)
+        {
+            float dist = Vector2.Distance(playerCollider.transform.position, poly.bounds.center);
+            if (dist < closestDistance)
+            {
+                closestDistance = dist;
+                closest = poly;
+            }
+        }
+
+        if (closest != null)
+        {
+            confiner.m_BoundingShape2D = closest;
+
+            // รีเฟรชกล้อง
+            var shape = confiner.m_BoundingShape2D;
+            confiner.m_BoundingShape2D = null;
+            confiner.m_BoundingShape2D = shape;
+        }
     }
 }
