@@ -261,21 +261,39 @@ public class BattleSystem : MonoBehaviour
 
         if (enemyUnit.CompareTag("Enemy"))
         {
-            GameManager.instance.AddGold(10);
+            GameManager.instance.AddGold(100);
         }
         else if (enemyUnit.CompareTag("MiniBoss"))
         {
-            GameManager.instance.AddGold(20);
+            GameManager.instance.AddGold(200);
+            ItemDictionary itemDict = FindAnyObjectByType<ItemDictionary>();
+            InventoryController inventory = FindAnyObjectByType<InventoryController>();
+            GameObject itemPrefab = itemDict.GetItemPrefab(6); // ID 6 = KNO3
+
+            if (itemPrefab != null && inventory != null)
+            {
+                bool added = inventory.AddItem(itemPrefab);
+                if (added)
+                {
+                    Debug.Log("MiniBoss dropped KNO3 (ID 6)");
+                }
+                else
+                {
+                    Debug.Log("Inventory full. Couldn't pick up KNO3");
+                }
+            }
         }
         else if (enemyUnit.CompareTag("Boss"))
         {
-            GameManager.instance.AddGold(50);
+            GameManager.instance.AddGold(500);
         }
 
         GameManager.instance.UpdateGoldUI();
 
         GameManager.instance.savedHP = playerUnit.currentHP;
         GameManager.instance.savedEnergy = playerUnit.currentEnergy;
+
+        GameManager.instance.isLoadingBattleScene = false;
         // ปิดฉาก TurnBase แต่ไม่เปลี่ยนตำแหน่ง
         SceneManager.UnloadSceneAsync("TurnBase");
 
@@ -318,6 +336,8 @@ public class BattleSystem : MonoBehaviour
 
         GameManager.instance.savedHP = playerUnit.currentHP;
         // ปิดฉาก TurnBase แต่ไม่เปลี่ยนตำแหน่ง
+        GameManager.instance.isLoadingBattleScene = false;
+
         SceneManager.UnloadSceneAsync("TurnBase");
 
         // ตั้งฉาก "2-1 Room" เป็น active
@@ -461,7 +481,7 @@ public class BattleSystem : MonoBehaviour
             return;
         }
 
-        int energyCost = 8;
+        int energyCost = 5;
         int stunDamage = playerUnit.damage / 2;
 
         if (!playerUnit.UseEnergy(energyCost))

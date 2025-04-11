@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text goldText;
     public int savedHP;
     public int savedMaxHP;
-    public int savedEnergy; 
+    public int savedEnergy;
     public int savedMaxEnergy;
     public int savedDamage;
     public int savedLevel;
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject currentZombie;
     public bool isLoadingFromSave = false;
     public bool sceneWasDisabled = false;
-    private bool isLoadingBattleScene = false;
+    public bool isLoadingBattleScene = false;
     public HashSet<string> deactivatedZombies = new HashSet<string>();
     public GameObject normalZombieTurnBase;
     public GameObject miniBossTurnBase;
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // ทำให้ GameManager คงอยู่ข้าม Scene
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -54,8 +54,8 @@ public class GameManager : MonoBehaviour
 
     public void LoadTurnBase(Transform player, GameObject zombie)
     {
-        if (isLoadingBattleScene) return; // ➕ ป้องกันไม่ให้โหลดซ้ำ
-        isLoadingBattleScene = true;      // ✅ mark ว่ากำลังโหลด
+        if (isLoadingBattleScene) return;
+        isLoadingBattleScene = true;
 
         playerPosition = player.position;
         previousScene = SceneManager.GetActiveScene();
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
                 break;
             default:
                 Debug.LogWarning("Unknown tag on zombie: " + zombie.tag);
-                nextEnemyPrefab = normalZombieTurnBase; // fallback
+                nextEnemyPrefab = normalZombieTurnBase;
                 break;
         }
 
@@ -83,13 +83,16 @@ public class GameManager : MonoBehaviour
         GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (GameObject obj in allObjects)
         {
-            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room" && obj.CompareTag("item"))
+            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room")
             {
-                sceneObjectStates.Add(new SceneObjectTempData
+                if (obj.CompareTag("item") || obj.CompareTag("NPCStudent") || obj.CompareTag("resetzombie") || obj.CompareTag("MiniBoss"))
                 {
-                    name = obj.name,
-                    isActive = obj.activeSelf
-                });
+                    sceneObjectStates.Add(new SceneObjectTempData
+                    {
+                        name = obj.name,
+                        isActive = obj.activeSelf
+                    });
+                }
             }
         }
         StartCoroutine(LoadBattleScene());
@@ -101,8 +104,8 @@ public class GameManager : MonoBehaviour
         while (!asyncLoad.isDone)
             yield return null;
 
-        sceneWasDisabled = true; // ✅ จำไว้ว่า scene ถูกปิด
-        SetSceneActive(previousScene, false); // ปิด scene ปัจจุบัน (2-1 Room)
+        sceneWasDisabled = true;
+        SetSceneActive(previousScene, false);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("TurnBase"));
     }
 
@@ -125,7 +128,6 @@ public class GameManager : MonoBehaviour
         SceneManager.SetActiveScene(previousScene);
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-
         GameObject zombie = GameManager.instance.currentZombie;
 
         if (player != null)
@@ -149,39 +151,19 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // 👉 เรียก Restore ก่อน
+        GameManager.instance.RestoreSceneObjects();
+
+        // 👇 จากนั้นค่อยปิด zombie ที่เคยถูกปิดไว้
         GameObject[] allZombies = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (GameObject z in allZombies)
         {
-            if ((z.CompareTag("Enemy") || z.CompareTag("MiniBoss") || z.CompareTag("Boss"))
+            if ((z.CompareTag("Enemy") || z.CompareTag("MiniBoss") || z.CompareTag("Boss") || z.CompareTag("resetzombie"))
                 && z.scene.IsValid() && z.scene.name == "2-1 Room")
             {
                 if (GameManager.instance.deactivatedZombies.Contains(z.name))
                 {
                     z.SetActive(false);
-                }
-            }
-        }
-
-        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-        foreach (GameObject obj in allObjects)
-        {
-            if (obj.scene.IsValid() && obj.scene.name == "2-1 Room")
-            {
-                foreach (var state in sceneObjectStates)
-                {
-                    if (obj.name.Contains(state.name)) // ป้องกันกรณี clone
-                    {
-                        obj.SetActive(state.isActive);
-
-                        // ถ้ามี interact2 ให้ Sync ด้วย
-                        InteractObject io = obj.GetComponent<InteractObject>();
-                        if (io != null && io.interact2 != null)
-                        {
-                            io.interact2.SetActive(state.isActive);
-                        }
-
-                        break;
-                    }
                 }
             }
         }
@@ -193,20 +175,36 @@ public class GameManager : MonoBehaviour
         {
             if (obj != null)
             {
-                if (isActive && !obj.activeSelf)
-                {
-                    obj.SetActive(true);
-                    Debug.Log("SetActive TRUE: " + obj.name);
-                }
-                else if (!isActive && obj.activeSelf)
-                {
-                    obj.SetActive(false);
-                    Debug.Log("SetActive FALSE: " + obj.name);
-                }
+                obj.SetActive(isActive);
             }
         }
     }
 
+    //public void RestoreSceneObjects()
+    //{
+    //    GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+    //    foreach (GameObject obj in allObjects)
+    //    {
+    //        if (obj.scene.IsValid() && obj.scene.name == "2-1 Room")
+    //        {
+    //            foreach (var state in sceneObjectStates)
+    //            {
+    //                if (obj.name.Contains(state.name))
+    //                {
+    //                    obj.SetActive(state.isActive);
+
+    //                    InteractObject io = obj.GetComponent<InteractObject>();
+    //                    if (io != null && io.interact2 != null)
+    //                    {
+    //                        io.interact2.SetActive(state.isActive);
+    //                    }
+
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     public void RestoreSceneObjects()
     {
         GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
@@ -216,7 +214,7 @@ public class GameManager : MonoBehaviour
             {
                 foreach (var state in sceneObjectStates)
                 {
-                    if (obj.name.Contains(state.name))
+                    if (obj.name == state.name) // ✅ แก้ตรงนี้ จาก Contains → เป็น ==
                     {
                         obj.SetActive(state.isActive);
 
@@ -232,6 +230,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
     public void AddGold(int amount)
     {
         gold += amount;

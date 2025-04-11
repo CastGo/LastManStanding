@@ -18,6 +18,8 @@ TagManager:
   - janitor
   - resetzombie
   - workstation
+  - mainkeydoor
+  - maincutterdoor
   layers:
   - Default
   - TransparentFX

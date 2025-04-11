@@ -59,7 +59,6 @@ public class InteractObject : MonoBehaviour
 
             if (interact.CompareTag("door"))
             {
-                // ตรวจสอบ item ID 4 และ 5
                 bool hasItem4 = HasItemWithID(4);
                 bool hasItem5 = HasItemWithID(5);
 
@@ -70,17 +69,24 @@ public class InteractObject : MonoBehaviour
                     foreach (GameObject npc in students)
                         npc.SetActive(false);
 
-                    // เปิด MiniBoss
-                    GameObject[] miniBosses = GameObject.FindGameObjectsWithTag("MiniBoss");
-                    foreach (GameObject boss in miniBosses)
-                        boss.SetActive(true);
-                }
-                GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-                foreach (GameObject zombies in allObjects)
-                {
-                    if (zombies.CompareTag("resetzombie") && zombies.scene.name == "2-1 Room")
+                    // เปิด MiniBoss เฉพาะเมื่อมี ID 4 และ 5
+                    GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+                    foreach (GameObject boss in allObjects)
                     {
-                        zombies.SetActive(true);
+                        if (boss.CompareTag("MiniBoss") && boss.scene.name == "2-1 Room")
+                        {
+                            boss.SetActive(true);
+                        }
+                    }
+                }
+
+                // เปิด resetzombie เสมอ ไม่ว่า player จะมีไอเทมหรือไม่
+                GameObject[] allObjectsForZombie = Resources.FindObjectsOfTypeAll<GameObject>();
+                foreach (GameObject zombie in allObjectsForZombie)
+                {
+                    if (zombie.CompareTag("resetzombie") && zombie.scene.name == "2-1 Room")
+                    {
+                        zombie.SetActive(true);
                     }
                 }
 
@@ -121,6 +127,26 @@ public class InteractObject : MonoBehaviour
                 TeleportPlayer();
             }
 
+            if (interact.CompareTag("mainkeydoor"))
+            {
+                interact2.SetActive(true);
+                if (!HasItemWithID(7))
+                {
+                    ShowVendingMessage("You need a key to open this door.");
+                    return;
+                }
+
+            }
+            if (interact.CompareTag("maincutterdoor"))
+            {
+                interact2.SetActive(true);
+                if (!HasItemWithID(10))
+                {
+                    ShowVendingMessage("You need a bolt cutter to open this door.");
+                    return;
+                }
+
+            }
             if (interact.CompareTag("window"))
             {
                 if (!HasItemWithID(9))
