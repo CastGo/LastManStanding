@@ -6,15 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/IntroScene.unity
-    guid: 2feab0b145a3f604eb6589f422474c1f
-  - enabled: 1
     path: Assets/Scenes/2-1 Room.unity
     guid: be8e56f5c8f3cfd4ea90db40337a6736
   - enabled: 1
     path: Assets/Scenes/TurnBase.unity
     guid: 355ac76ea54cc5b4987023796eb3e006
-  - enabled: 0
-    path: Assets/Scenes/2nd Floor.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

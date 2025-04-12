@@ -200,7 +200,7 @@ public class InteractObject : MonoBehaviour
                 }
                 else
                 {
-                    ShowVendingMessage("You need battery, sugar, and KNO3 to make a bomb.");
+                    ShowVendingMessage("You want to open the storage room but don’t have a keycard? Then try using a bomb instead it’s not that hard to make. 1. Try finding sugar in the canteen. 2. I think I saw a battery in Room 2/3. Just mix them together in a can, and you’re good to go. ");
                 }
             }
             if (interact.CompareTag("workstation"))
@@ -242,12 +242,12 @@ public class InteractObject : MonoBehaviour
                     if (keyPrefab != null)
                     {
                         bool added = inventoryController.AddItem(keyPrefab);
-                        ShowVendingMessage(added ? "You received a key from the janitor!" : "Inventory full, can't get the key.");
+                        ShowVendingMessage(added ? "Thank you so much! Here, take the key." : "Inventory full, can't get the key.");
                     }
                 }
                 else
                 {
-                    ShowVendingMessage("You need 3 sushi to trade for a key.");
+                    ShowVendingMessage("You want a key? Sure — but do you happen to have 4 pieces of sushi? I'm starving. There are zombies everywhere out there, so I don’t dare go outside.");
                 }
             }
 
