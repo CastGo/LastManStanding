@@ -198,6 +198,36 @@ public class SaveController : MonoBehaviour
             confiner.m_BoundingShape2D = shape;
         }
     }
+    public void NewGame()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            Unit unit = player.GetComponent<Unit>();
+            if (unit != null)
+            {
+                unit.ResetToDefault();
+                GameManager.instance.savedHP = unit.currentHP;
+                GameManager.instance.savedEnergy = unit.currentEnergy;
+                GameManager.instance.gold = 0;
+                GameManager.instance.UpdateGoldUI();
+            }
+        }
+
+        InventoryController inventory = FindObjectOfType<InventoryController>();
+        if (inventory != null)
+        {
+            inventory.SetInventoryItems(new List<InventorySaveData>());
+        }
+
+        if (File.Exists(saveLocation))
+        {
+            File.Delete(saveLocation);
+            Debug.Log("Old save deleted.");
+        }
+
+        Debug.Log("New Game started.");
+    }
 }
 
 

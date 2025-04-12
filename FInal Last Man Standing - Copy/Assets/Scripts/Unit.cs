@@ -8,24 +8,44 @@ public class Unit : MonoBehaviour
     public int unitLevel;
 
     public int damage;
-
     public int maxHP;
     public int currentHP;
     public int maxEnergy;
     public int currentEnergy;
 
+    // ✅ ค่าพื้นฐานเริ่มต้น
+    private int defaultLevel;
+    private int defaultDamage;
+    private int defaultMaxHP;
+    private int defaultMaxEnergy;
+
+    void Awake()
+    {
+        // เซฟค่าพื้นฐานที่ตั้งใน Inspector ไว้
+        defaultLevel = unitLevel;
+        defaultDamage = damage;
+        defaultMaxHP = maxHP;
+        defaultMaxEnergy = maxEnergy;
+    }
+
+    // ✅ เรียกตอนเริ่ม New Game
+    public void ResetToDefault()
+    {
+        unitLevel = defaultLevel;
+        damage = defaultDamage;
+
+        maxHP = defaultMaxHP;
+        currentHP = 25;
+
+        maxEnergy = defaultMaxEnergy;
+        currentEnergy = 10;
+    }
+
     public bool TakeDamage(int dmg)
     {
         currentHP -= dmg;
 
-        if (currentHP <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return currentHP <= 0;
     }
 
     public void Heal(int amount)
@@ -36,6 +56,7 @@ public class Unit : MonoBehaviour
             currentHP = maxHP;
         }
     }
+
     public bool UseEnergy(int cost)
     {
         if (currentEnergy >= cost)
@@ -46,6 +67,7 @@ public class Unit : MonoBehaviour
 
         return false; // energy ไม่พอ
     }
+
     public void GainEnergy(int amount)
     {
         currentEnergy += amount;
@@ -54,6 +76,7 @@ public class Unit : MonoBehaviour
             currentEnergy = maxEnergy;
         }
     }
+
     public IEnumerator FlashRed()
     {
         SpriteRenderer sprite = GetComponentInChildren<SpriteRenderer>();
@@ -66,3 +89,4 @@ public class Unit : MonoBehaviour
         }
     }
 }
+

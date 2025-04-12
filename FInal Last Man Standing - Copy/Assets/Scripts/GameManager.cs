@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void LoadTurnBase(Transform player, GameObject zombie)
     {
         if (isLoadingBattleScene) return;

@@ -10,6 +10,7 @@ public class InventoryController : MonoBehaviour
     private ItemDictionary itemDictionary;
     [HideInInspector] public ItemSlot selectedSlot;
 
+    public GameObject Intro;
     public GameObject menuPanel;
     public GameObject mapPanel;
     public GameObject inventoryPanel;
@@ -31,35 +32,36 @@ public class InventoryController : MonoBehaviour
         mapPanel.SetActive(false);
         menuPanel.SetActive(false);
 
+        Intro.SetActive(true); // เริ่มด้วย intro เสมอ
+        Time.timeScale = 0f;
+
         CreateEmptySlots();
     }
     void Update()
     {
-        // Toggle Main Menu
+        if (Intro.activeSelf)
+        {
+            Time.timeScale = 0f; // หยุดทุกอย่างขณะ Intro เปิดอยู่
+            return; // ไม่ให้กดอะไรต่อเลย
+        }
+
+        // ดำเนินต่อเฉพาะถ้า Intro ถูกปิด
+        // ✅ Toggle Main Menu
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             isMainMenuOpen = !isMainMenuOpen;
             menuPanel.SetActive(isMainMenuOpen);
-
             Time.timeScale = isMainMenuOpen ? 0f : 1f;
 
             if (isMainMenuOpen)
             {
-                if (isInventoryOpen)
-                {
-                    isInventoryOpen = false;
-                    inventoryPanel.SetActive(false);
-                }
-
-                if (isMapOpen)
-                {
-                    isMapOpen = false;
-                    mapPanel.SetActive(false);
-                }
+                isInventoryOpen = false;
+                isMapOpen = false;
+                inventoryPanel.SetActive(false);
+                mapPanel.SetActive(false);
             }
         }
 
-        // Only allow inventory/map when main menu is closed
         if (!isMainMenuOpen)
         {
             if (Input.GetKeyUp(KeyCode.B))
@@ -67,7 +69,7 @@ public class InventoryController : MonoBehaviour
                 isInventoryOpen = !isInventoryOpen;
                 inventoryPanel.SetActive(isInventoryOpen);
 
-                if (isInventoryOpen && isMapOpen)
+                if (isInventoryOpen)
                 {
                     isMapOpen = false;
                     mapPanel.SetActive(false);
@@ -79,22 +81,16 @@ public class InventoryController : MonoBehaviour
                 isMapOpen = !isMapOpen;
                 mapPanel.SetActive(isMapOpen);
 
-                if (isMapOpen && isInventoryOpen)
+                if (isMapOpen)
                 {
                     isInventoryOpen = false;
                     inventoryPanel.SetActive(false);
                 }
             }
 
-            // Slot Click (Only when inventory is open)
-            if (Input.GetMouseButtonDown(0) && isInventoryOpen)
-            {
-                DetectSlotClick(false); // Left Click
-            }
-            else if (Input.GetMouseButtonDown(1) && isInventoryOpen)
-            {
-                DetectSlotClick(true); // Right Click
-            }
+            // Detect click (unchanged)
+            if (Input.GetMouseButtonDown(0) && isInventoryOpen) DetectSlotClick(false);
+            else if (Input.GetMouseButtonDown(1) && isInventoryOpen) DetectSlotClick(true);
         }
     }
     private void DetectSlotClick(bool isRightClick)
@@ -311,5 +307,52 @@ public class InventoryController : MonoBehaviour
         isMainMenuOpen = false;
         menuPanel.SetActive(false);
         Time.timeScale = 1f;
+    }
+    public void OnIntroPlay()
+    {
+        Intro.SetActive(false);
+        Time.timeScale = 1f;
+        SaveController.instance.NewGame();
+    }
+
+    public void OnIntroLoad()
+    {
+        Intro.SetActive(false);
+        Time.timeScale = 1f;
+        SaveController.instance.LoadGame();
+    }
+
+    public void OnIntroExit()
+    {
+        Application.Quit();
+    }
+    public void OnResumeButton()
+    {
+        menuPanel.SetActive(false);
+        Time.timeScale = 1f;
+        isMainMenuOpen = false;
+    }
+
+    public void OnLoadButton()
+    {
+        SaveController.instance.LoadGame();
+        menuPanel.SetActive(false);
+        Time.timeScale = 1f;
+        isMainMenuOpen = false;
+    }
+
+    public void OnLeaveButton()
+    {
+        Intro.SetActive(true);
+        Time.timeScale = 0f;
+
+        // ปิดทุก panel ทิ้ง
+        menuPanel.SetActive(false);
+        mapPanel.SetActive(false);
+        inventoryPanel.SetActive(false);
+
+        isMainMenuOpen = false;
+        isMapOpen = false;
+        isInventoryOpen = false;
     }
 }

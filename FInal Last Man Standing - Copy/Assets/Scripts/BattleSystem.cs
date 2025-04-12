@@ -162,7 +162,7 @@ public class BattleSystem : MonoBehaviour
             {
                 dialogueText.text = "Boss regenerates with DARK MAGIC!";
                 yield return new WaitForSeconds(1f);
-                enemyUnit.Heal(40); // 🔁 ปรับตามต้องการ
+                enemyUnit.Heal(30); // 🔁 ปรับตามต้องการ
                 enemyHUD.SetHP(enemyUnit.currentHP);
                 bossHealedAtQuarter = true;
             }
@@ -170,7 +170,7 @@ public class BattleSystem : MonoBehaviour
             {
                 dialogueText.text = "Boss uses a healing spell!";
                 yield return new WaitForSeconds(1f);
-                enemyUnit.Heal(30);
+                enemyUnit.Heal(20);
                 enemyHUD.SetHP(enemyUnit.currentHP);
                 bossHealedAtHalf = true;
             }
@@ -224,9 +224,10 @@ public class BattleSystem : MonoBehaviour
             // 💥 ตรวจสอบว่าเป็น MiniBoss แล้วให้ระเบิดใส่ผู้เล่น
             if (enemyUnit.CompareTag("MiniBoss"))
             {
-                int explosionDamage = 5; // หรือจะตั้งไว้ในตัวแปรก็ได้
+                int explosionDamage = 15; // หรือจะตั้งไว้ในตัวแปรก็ได้
                 dialogueText.text = "MiniBoss explodes!";
                 bool playerDied = playerUnit.TakeDamage(explosionDamage);
+                StartCoroutine(playerUnit.FlashRed());
                 playerHUD.SetHP(playerUnit.currentHP);
 
                 if (playerDied)

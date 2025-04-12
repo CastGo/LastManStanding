@@ -20,6 +20,8 @@ TagManager:
   - workstation
   - mainkeydoor
   - maincutterdoor
+  - BlackScreen
+  - DialogueText
   layers:
   - Default
   - TransparentFX

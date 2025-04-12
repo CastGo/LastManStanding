@@ -149,7 +149,8 @@ public class InteractObject : MonoBehaviour
                     ShowVendingMessage("You need a key to open this door.");
                     return;
                 }
-
+                confiner.m_BoundingShape2D = map;
+                TeleportPlayer();
             }
             if (interact.CompareTag("maincutterdoor"))
             {
@@ -159,6 +160,8 @@ public class InteractObject : MonoBehaviour
                     ShowVendingMessage("You need a bolt cutter to open this door.");
                     return;
                 }
+                confiner.m_BoundingShape2D = map;
+                TeleportPlayer();
 
             }
             if (interact.CompareTag("window"))
@@ -393,4 +396,15 @@ public class InteractObject : MonoBehaviour
         yield return new WaitForSeconds(delay);
         obj.SetActive(false);
     }
+    IEnumerator ShowCutsceneAndLoadIntro()
+    {
+        yield return new WaitForSeconds(10f);
+        InventoryController inventory = FindAnyObjectByType<InventoryController>();
+        if (inventory != null && inventory.Intro != null)
+        {
+            inventory.Intro.SetActive(true);
+            Time.timeScale = 0f;
+        }
+    }
 }
+
