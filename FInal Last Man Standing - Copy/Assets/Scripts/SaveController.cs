@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class ZombiePrefabEntry
@@ -33,9 +34,27 @@ public class SaveController : MonoBehaviour
         }
 
         saveLocation = Path.Combine(Application.persistentDataPath, "saveData.json");
-        inventoryController = FindAnyObjectByType<InventoryController>();
+        //inventoryController = FindAnyObjectByType<InventoryController>();
+    }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        {
+            if (scene.name == "2-1 Room")
+            {
+                StartCoroutine(DelayedLoadOrNewGame());
+            }
+        }
+    }
     public void SaveGame()
     {
         List<SceneObjectSaveData> sceneObjects = new List<SceneObjectSaveData>();
@@ -227,6 +246,24 @@ public class SaveController : MonoBehaviour
         }
 
         Debug.Log("New Game started.");
+    }
+    IEnumerator DelayedLoadOrNewGame()
+    {
+        yield return new WaitUntil(() => FindObjectOfType<InventoryController>() != null);
+        inventoryController = FindObjectOfType<InventoryController>();
+
+        yield return new WaitUntil(() => inventoryController.isInitialized);
+
+        int shouldLoad = PlayerPrefs.GetInt("LoadGame", 0);
+        if (shouldLoad == 1)
+        {
+            LoadGame();
+            PlayerPrefs.DeleteKey("LoadGame");
+        }
+        else
+        {
+            NewGame();
+        }
     }
 }
 

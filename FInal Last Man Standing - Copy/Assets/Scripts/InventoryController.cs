@@ -4,13 +4,14 @@ using System.IO;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class InventoryController : MonoBehaviour
 {
     private ItemDictionary itemDictionary;
     [HideInInspector] public ItemSlot selectedSlot;
+    [HideInInspector] public bool isInitialized = false;
 
-    public GameObject Intro;
     public GameObject menuPanel;
     public GameObject mapPanel;
     public GameObject inventoryPanel;
@@ -24,29 +25,53 @@ public class InventoryController : MonoBehaviour
     private bool isMapOpen = false;
     private bool isMainMenuOpen = false;
 
-    // Start is called before the first frame update
-    void Start()
+
+    void OnEnable()
     {
-        itemDictionary = FindAnyObjectByType<ItemDictionary>();
-        inventoryPanel.SetActive(false);
-        mapPanel.SetActive(false);
-        menuPanel.SetActive(false);
-
-        Intro.SetActive(true); // เริ่มด้วย intro เสมอ
-        Time.timeScale = 0f;
-
-        CreateEmptySlots();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    void Update()
+
+    void OnDisable()
     {
-        if (Intro.activeSelf)
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "2-1 Room")
         {
-            Time.timeScale = 0f; // หยุดทุกอย่างขณะ Intro เปิดอยู่
-            return; // ไม่ให้กดอะไรต่อเลย
+            inventoryPanel = GameObject.Find("Inventory");
+            mapPanel = GameObject.Find("Map");
+            menuPanel = GameObject.Find("MainMenu");
+            slotPanel = GameObject.Find("InventoryItem");
+
+            var nameObj = GameObject.Find("ItemName");
+            var descObj = GameObject.Find("ItemDesciption");
+            itemNameText = nameObj != null ? nameObj.GetComponent<TMP_Text>() : null;
+            itemDescriptionText = descObj != null ? descObj.GetComponent<TMP_Text>() : null;
+
+            if (inventoryPanel == null || mapPanel == null || menuPanel == null || itemNameText == null || itemDescriptionText == null || slotPanel == null)
+            {
+                Debug.LogWarning("❗ มี UI บางตัวที่หาไม่เจอใน scene 2-1 Room!");
+            }
+
+            inventoryPanel?.SetActive(false);
+            mapPanel?.SetActive(false);
+            menuPanel?.SetActive(false);
+
+            Time.timeScale = 1f;
+            CreateEmptySlots();
+            isInitialized = true;
         }
 
-        // ดำเนินต่อเฉพาะถ้า Intro ถูกปิด
-        // ✅ Toggle Main Menu
+        itemDictionary = FindAnyObjectByType<ItemDictionary>();
+    }
+
+    void Update()
+    {
+        if (inventoryPanel == null || mapPanel == null || menuPanel == null)
+            return;
+
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             isMainMenuOpen = !isMainMenuOpen;
@@ -88,13 +113,14 @@ public class InventoryController : MonoBehaviour
                 }
             }
 
-            // Detect click (unchanged)
             if (Input.GetMouseButtonDown(0) && isInventoryOpen) DetectSlotClick(false);
             else if (Input.GetMouseButtonDown(1) && isInventoryOpen) DetectSlotClick(true);
         }
     }
+
     private void DetectSlotClick(bool isRightClick)
     {
+        if (slotPanel == null) return;
         Vector2 mousePos = Input.mousePosition;
         bool slotClicked = false;
 
@@ -114,7 +140,7 @@ public class InventoryController : MonoBehaviour
                 if (slot.currentItem != null)
                 {
                     if (isRightClick)
-                        UseItem(slot); // 👈 เพิ่มตรงนี้
+                        UseItem(slot);
                     else
                         ShowItemInfo(slot);
                 }
@@ -138,13 +164,14 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+
     public bool AddItem(GameObject itemPrefab)
     {
+        if (slotPanel == null) return false;
         Item newItemData = itemPrefab.GetComponent<Item>();
 
         if (newItemData.isStackable)
         {
-            // 🔁 หา slot ที่ stack ได้
             foreach (Transform slotTransform in slotPanel.transform)
             {
                 ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
@@ -161,7 +188,6 @@ public class InventoryController : MonoBehaviour
             }
         }
 
-        // ✅ หา slot ว่าง
         foreach (Transform slotTransform in slotPanel.transform)
         {
             ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
@@ -179,21 +205,21 @@ public class InventoryController : MonoBehaviour
             }
         }
 
-        // ❌ เต็มทุกช่อง หรือ stack เต็มหมด
         Debug.Log("Inventory is full or cannot stack this item.");
         return false;
     }
+
     public List<InventorySaveData> GetInventoryItems()
     {
         List<InventorySaveData> invData = new List<InventorySaveData>();
+        if (slotPanel == null) return invData;
+
         foreach (Transform itemslotTranfrom in slotPanel.transform)
         {
             ItemSlot itemSlot = itemslotTranfrom.GetComponent<ItemSlot>();
             if (itemSlot.currentItem != null)
             {
                 Item item = itemSlot.currentItem.GetComponent<Item>();
-
-                // ❗ ป้องกันไม่ให้บันทึก item ที่หมดแล้ว (quantity <= 0)
                 if (item.quantity > 0)
                 {
                     invData.Add(new InventorySaveData
@@ -210,6 +236,12 @@ public class InventoryController : MonoBehaviour
 
     public void SetInventoryItems(List<InventorySaveData> inventorySaveData)
     {
+        if (slotPanel == null)
+        {
+            Debug.LogError("❌ slotPanel is null in SetInventoryItems!");
+            return;
+        }
+
         foreach (Transform slotTransform in slotPanel.transform)
         {
             ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
@@ -240,20 +272,22 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+
     private void CreateEmptySlots()
     {
-        // เคลียร์ของเก่า
+        if (slotPanel == null) return;
+
         foreach (Transform child in slotPanel.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // สร้างใหม่
         for (int i = 0; i < slotCount; i++)
         {
             Instantiate(slotPrefab, slotPanel.transform);
         }
     }
+
     private void UseItem(ItemSlot slot)
     {
         if (slot.currentItem == null) return;
@@ -263,7 +297,6 @@ public class InventoryController : MonoBehaviour
         {
             item.Use();
 
-            // Sync ค่า HP/Energy กับ GameManager
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
@@ -284,6 +317,7 @@ public class InventoryController : MonoBehaviour
             ShowItemInfo(slot);
         }
     }
+
     public void ShowItemInfo(ItemSlot slot)
     {
         if (slot.currentItem != null)
@@ -291,41 +325,25 @@ public class InventoryController : MonoBehaviour
             Item item = slot.currentItem.GetComponent<Item>();
             if (item != null)
             {
-                itemNameText.text = item.itemName;
-                itemDescriptionText.text = item.itemDescription;
+                if (itemNameText != null) itemNameText.text = item.itemName;
+                if (itemDescriptionText != null) itemDescriptionText.text = item.itemDescription;
             }
         }
     }
 
     private void ClearItemInfo()
     {
-        itemNameText.text = "";
-        itemDescriptionText.text = "";
+        if (itemNameText != null) itemNameText.text = "";
+        if (itemDescriptionText != null) itemDescriptionText.text = "";
     }
+
     public void ResumeGame()
     {
         isMainMenuOpen = false;
         menuPanel.SetActive(false);
         Time.timeScale = 1f;
     }
-    public void OnIntroPlay()
-    {
-        Intro.SetActive(false);
-        Time.timeScale = 1f;
-        SaveController.instance.NewGame();
-    }
 
-    public void OnIntroLoad()
-    {
-        Intro.SetActive(false);
-        Time.timeScale = 1f;
-        SaveController.instance.LoadGame();
-    }
-
-    public void OnIntroExit()
-    {
-        Application.Quit();
-    }
     public void OnResumeButton()
     {
         menuPanel.SetActive(false);
@@ -343,16 +361,15 @@ public class InventoryController : MonoBehaviour
 
     public void OnLeaveButton()
     {
-        Intro.SetActive(true);
-        Time.timeScale = 0f;
+        menuPanel?.SetActive(false);
+        mapPanel?.SetActive(false);
+        inventoryPanel?.SetActive(false);
 
-        // ปิดทุก panel ทิ้ง
-        menuPanel.SetActive(false);
-        mapPanel.SetActive(false);
-        inventoryPanel.SetActive(false);
+        // ล้าง DontDestroyOnLoad ก่อนกลับ
+        Destroy(GameManager.instance?.gameObject);
+        Destroy(SaveController.instance?.gameObject);
 
-        isMainMenuOpen = false;
-        isMapOpen = false;
-        isInventoryOpen = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("IntroScene");
     }
 }

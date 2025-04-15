@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class InteractObject : MonoBehaviour
 {
@@ -149,8 +150,12 @@ public class InteractObject : MonoBehaviour
                     ShowVendingMessage("You need a key to open this door.");
                     return;
                 }
-                confiner.m_BoundingShape2D = map;
-                TeleportPlayer();
+
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.StartCoroutine(ShowMessageAndReturnToIntro("You unlocked the door with the key!"));
+                }
+                return;
             }
             if (interact.CompareTag("maincutterdoor"))
             {
@@ -396,15 +401,23 @@ public class InteractObject : MonoBehaviour
         yield return new WaitForSeconds(delay);
         obj.SetActive(false);
     }
-    IEnumerator ShowCutsceneAndLoadIntro()
+    IEnumerator ShowMessageAndReturnToIntro(string message)
     {
-        yield return new WaitForSeconds(10f);
-        InventoryController inventory = FindAnyObjectByType<InventoryController>();
-        if (inventory != null && inventory.Intro != null)
+        Debug.Log("▶ ShowMessageAndReturnToIntro started");
+
+        if (messageText != null)
         {
-            inventory.Intro.SetActive(true);
-            Time.timeScale = 0f;
+            messageText.text = message;
+            messageText.gameObject.SetActive(true);
         }
+
+        yield return new WaitForSeconds(messageDuration + 0.5f);
+
+        Destroy(GameManager.instance?.gameObject);
+        Destroy(SaveController.instance?.gameObject);
+
+        Debug.Log("▶ Load IntroScene now");
+        SceneManager.LoadScene("IntroScene");
     }
 }
 

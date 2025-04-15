@@ -751,7 +751,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1596381686}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_TargetAssemblyTypeName: IntroButton, Assembly-CSharp
         m_MethodName: OnPlayButton
         m_Mode: 1
         m_Arguments:
@@ -978,7 +978,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1596381682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ad712f619b223a47ba2c07281438dd7, type: 3}
+  m_Script: {fileID: 11500000, guid: e662eb1fb850dda4d880175bd3ad9af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1784409282
@@ -1167,7 +1167,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1596381686}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_TargetAssemblyTypeName: IntroButton, Assembly-CSharp
         m_MethodName: OnExitButton
         m_Mode: 1
         m_Arguments:
@@ -1379,7 +1379,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1596381686}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_TargetAssemblyTypeName: IntroButton, Assembly-CSharp
         m_MethodName: OnLoadButton
         m_Mode: 1
         m_Arguments:
