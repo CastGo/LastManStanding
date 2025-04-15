@@ -19,6 +19,9 @@ public class Unit : MonoBehaviour
     private int defaultMaxHP;
     private int defaultMaxEnergy;
 
+    public AudioClip damageSound;
+    private AudioSource audioSource;
+
     void Awake()
     {
         // เซฟค่าพื้นฐานที่ตั้งใน Inspector ไว้
@@ -26,6 +29,7 @@ public class Unit : MonoBehaviour
         defaultDamage = damage;
         defaultMaxHP = maxHP;
         defaultMaxEnergy = maxEnergy;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // ✅ เรียกตอนเริ่ม New Game
@@ -44,6 +48,11 @@ public class Unit : MonoBehaviour
     public bool TakeDamage(int dmg)
     {
         currentHP -= dmg;
+
+        if (damageSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(damageSound);
+        }
 
         return currentHP <= 0;
     }

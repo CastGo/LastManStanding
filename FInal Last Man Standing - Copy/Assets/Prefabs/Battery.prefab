@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 4
   itemName: Battery
-  itemDescription: It is a part for crafting bomb.
+  itemDescription: "\u0E40\u0E1B\u0E47\u0E19\u0E2A\u0E48\u0E27\u0E19\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E43\u0E19\u0E01\u0E32\u0E23\u0E17\u0E33\u0E23\u0E30\u0E40\u0E1A\u0E34\u0E14"
   quantity: 1
   isStackable: 1
   maxStack: 1
@@ -196,12 +196,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 819747945215744253}
   interact2: {fileID: 1268058001764951062}
+  interact3: {fileID: 0}
   interactLight: {fileID: 4872851487918968804}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!61 &8952914867116580802
 BoxCollider2D:
   m_ObjectHideFlags: 0

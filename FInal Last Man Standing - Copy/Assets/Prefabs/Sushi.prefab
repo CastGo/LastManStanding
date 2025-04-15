@@ -121,10 +121,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1
   itemName: Sushi
-  itemDescription: Energy + 10
+  itemDescription: "\u0E40\u0E2D\u0E19\u0E40\u0E19\u0E2D\u0E23\u0E4C\u0E08\u0E35\u0E49
+    + 10"
   quantity: 1
   isStackable: 1
-  maxStack: 10
+  maxStack: 5
   isUsable: 1
   restoreHP: 0
   restoreEnergy: 10
@@ -202,6 +203,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!61 &8952914867116580802
 BoxCollider2D:
   m_ObjectHideFlags: 0

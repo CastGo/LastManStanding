@@ -13,6 +13,7 @@ public class InteractObject : MonoBehaviour
 
     public GameObject interact;
     public GameObject interact2;
+    public GameObject interact3;
     public GameObject interactLight;
     private bool playerInRange;
     private InventoryController inventoryController;
@@ -22,6 +23,9 @@ public class InteractObject : MonoBehaviour
     public TMP_Text messageText;
     public float messageDuration = 2f;
     private ItemDictionary itemDictionary;
+    public DialogueData dialogueData;
+    private bool isDialoguePlaying = false;
+    private bool hasExploded = false;
 
     void Start()
     {
@@ -111,11 +115,15 @@ public class InteractObject : MonoBehaviour
 
             if (interact.CompareTag("BombDoor"))
             {
+                if (hasExploded) return; // ✅ กันไม่ให้เล่นซ้ำ
+
                 if (!HasItemWithID(8))
                 {
-                    ShowVendingMessage("You need a bomb to open this door.");
+                    ShowVendingMessage("ประตูนี้ล็อคอยู่ แต่ฉันไม่มี KeyCard จะทำยังไงดีนะ");
                     return;
                 }
+
+                hasExploded = true; // ✅ ตั้ง flag ว่าระเบิดแล้ว
 
                 RemoveItemByID(8);
 
@@ -134,7 +142,7 @@ public class InteractObject : MonoBehaviour
             {
                 if (!HasItemWithID(7))
                 {
-                    ShowVendingMessage("You need a key to open this door.");
+                    ShowVendingMessage("ฉันต้องการกุญแจเพื่อเปิดห้องนี้");
                     return;
                 }
 
@@ -147,13 +155,16 @@ public class InteractObject : MonoBehaviour
                 interact2.SetActive(true);
                 if (!HasItemWithID(7))
                 {
-                    ShowVendingMessage("You need a key to open this door.");
-                    return;
+                    if (!isDialoguePlaying && dialogueData != null)
+                    {
+                        StartCoroutine(PlayDialogue());
+                        return;
+                    }
                 }
 
                 if (GameManager.instance != null)
                 {
-                    GameManager.instance.StartCoroutine(ShowMessageAndReturnToIntro("You unlocked the door with the key!"));
+                    GameManager.instance.StartCoroutine(ShowMessageAndReturnToIntro("ประตูถูกเปิดแล้ว"));
                 }
                 return;
             }
@@ -162,13 +173,16 @@ public class InteractObject : MonoBehaviour
                 interact2.SetActive(true);
                 if (!HasItemWithID(10))
                 {
-                    ShowVendingMessage("You need a bolt cutter to open this door.");
-                    return;
+                    if (!isDialoguePlaying && dialogueData != null)
+                    {
+                        StartCoroutine(PlayDialogue());
+                        return;
+                    }
                 }
 
                 if (GameManager.instance != null)
                 {
-                    GameManager.instance.StartCoroutine(ShowMessageAndReturnToIntro2("You unlocked the door with the cutter!"));
+                    GameManager.instance.StartCoroutine(ShowMessageAndReturnToIntro2("ประตูถูกเปิดแล้ว"));
                 }
                 return;
             }
@@ -176,7 +190,7 @@ public class InteractObject : MonoBehaviour
             {
                 if (!HasItemWithID(9))
                 {
-                    ShowVendingMessage("You need a rope to go 2-3 room.");
+                    ShowVendingMessage("ถ้าฉํนมีเชือกฉันน่าจะใช้มันลงไปห้อง 2-3 ได้ ในห้องน้ำซักห้องน่าจะมีเชือกนะ");
                     return;
                 }
 
@@ -188,6 +202,16 @@ public class InteractObject : MonoBehaviour
                 bool hasBattery = HasItemWithID(4);
                 bool hasSugar = HasItemWithID(5);
                 bool hasKNO3 = HasItemWithID(6);
+
+                if (!hasBattery)
+                {
+                    interact2.SetActive(true); // ✅ ไม่มีแบตเตอรี่
+                }
+
+                if (!hasSugar)
+                {
+                    interact3.SetActive(true); // ✅ ไม่มีน้ำตาล
+                }
 
                 if (hasBattery && hasSugar && hasKNO3)
                 {
@@ -208,7 +232,11 @@ public class InteractObject : MonoBehaviour
                 }
                 else
                 {
-                    ShowVendingMessage("You want to open the storage room but don’t have a keycard? Then try using a bomb instead it’s not that hard to make. 1. Try finding sugar in the canteen. 2. I think I saw a battery in Room 2/3. Just mix them together in a can, and you’re good to go. ");
+                    if (!isDialoguePlaying && dialogueData != null)
+                    {
+                        StartCoroutine(PlayDialogue());
+                        return;
+                    }
                 }
             }
             if (interact.CompareTag("workstation"))
@@ -227,7 +255,7 @@ public class InteractObject : MonoBehaviour
                     if (bombPrefab != null)
                     {
                         bool added = inventoryController.AddItem(bombPrefab);
-                        ShowVendingMessage(added ? "You received a bomb!" : "Inventory full, couldn't add bomb.");
+                        ShowVendingMessage(added ? "คุณได้รับระเบิด DIY" : "กระเป๋าของคุณเต็ม!!");
                     }
 
                     GameObject[] miniBosses = GameObject.FindGameObjectsWithTag("MiniBoss");
@@ -236,7 +264,7 @@ public class InteractObject : MonoBehaviour
                 }
                 else
                 {
-                    ShowVendingMessage("You need battery, sugar, and KNO3 to make a bomb.");
+                    ShowVendingMessage("ต้องการแบตเตอรี่ น้ำตาล และKNO3เพื่อสร้างระเบิด");
                 }
             }
             if (interact.CompareTag("janitor"))
@@ -250,12 +278,13 @@ public class InteractObject : MonoBehaviour
                     if (keyPrefab != null)
                     {
                         bool added = inventoryController.AddItem(keyPrefab);
-                        ShowVendingMessage(added ? "Thank you so much! Here, take the key." : "Inventory full, can't get the key.");
+                        ShowVendingMessage(added ? "ขอบใจมาก เอากุญแจนี่ไปสิ" : "กระเป๋าของคุณเต็ม!!");
                     }
                 }
-                else
+                if (!isDialoguePlaying && dialogueData != null)
                 {
-                    ShowVendingMessage("You want a key? Sure — but do you happen to have 4 pieces of sushi? I'm starving. There are zombies everywhere out there, so I don’t dare go outside.");
+                    StartCoroutine(PlayDialogue());
+                    return;
                 }
             }
 
@@ -270,17 +299,17 @@ public class InteractObject : MonoBehaviour
                         {
                             GameManager.instance.SpendGold(itemPrice);
                             GameManager.instance.UpdateGoldUI();
-                            ShowVendingMessage("Item purchased successfully!");
+                            ShowVendingMessage("ซื้อไอเทมสำเร็จ");
                         }
                         else
                         {
-                            ShowVendingMessage("Inventory full or item stack maxed!");
+                            ShowVendingMessage("กระเป๋าของคุณเต็ม");
                         }
                     }
                 }
                 else
                 {
-                    ShowVendingMessage("Not enough yen!");
+                    ShowVendingMessage("คุณมีเงินไม่พอ");
                 }
             }
         }
@@ -322,7 +351,7 @@ public class InteractObject : MonoBehaviour
         {
             messageText.text = message;
             StopAllCoroutines();
-            StartCoroutine(HideVendingMessageAfterDelay());
+            StartCoroutine(TypeAndHideMessage(message));
         }
     }
 
@@ -439,6 +468,42 @@ public class InteractObject : MonoBehaviour
 
         Debug.Log("▶ Load IntroScene now");
         SceneFader.instance.FadeToScene("CutterEnd");
+    }
+    IEnumerator PlayDialogue()
+    {
+        isDialoguePlaying = true;
+        messageText.gameObject.SetActive(true);
+
+        foreach (var line in dialogueData.lines)
+        {
+            string fullText = $"{line.speaker}: {line.text}";
+            messageText.text = ""; // เคลียร์ข้อความเก่า
+
+            foreach (char c in fullText)
+            {
+                messageText.text += c;
+                yield return new WaitForSeconds(0.03f); // หน่วงต่ออักษร (ปรับได้)
+            }
+
+            yield return new WaitForSeconds(messageDuration); // หน่วงระหว่างบรรทัด
+        }
+
+        messageText.gameObject.SetActive(false);
+        isDialoguePlaying = false;
+    }
+    IEnumerator TypeAndHideMessage(string message)
+    {
+        messageText.gameObject.SetActive(true);
+        messageText.text = "";
+
+        foreach (char c in message)
+        {
+            messageText.text += c;
+            yield return new WaitForSeconds(0.03f); // ปรับความเร็วได้
+        }
+
+        yield return new WaitForSeconds(messageDuration);
+        messageText.gameObject.SetActive(false);
     }
 }
 

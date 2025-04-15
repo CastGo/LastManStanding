@@ -305,15 +305,18 @@ public class InventoryController : MonoBehaviour
                 GameManager.instance.savedEnergy = unit.currentEnergy;
             }
 
-            item.quantity--;
-
-            if (item.quantity <= 0)
+            if (item.ID != 3)
             {
-                Destroy(slot.currentItem);
-                slot.currentItem = null;
-            }
+                item.quantity--;
 
-            slot.UpdateStackText();
+                if (item.quantity <= 0)
+                {
+                    Destroy(slot.currentItem);
+                    slot.currentItem = null;
+                }
+
+                slot.UpdateStackText();
+            }
             ShowItemInfo(slot);
         }
     }

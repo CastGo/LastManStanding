@@ -219,12 +219,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 130941912}
   interact: {fileID: 13066700}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 170540471}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &13066704
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -375,12 +377,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1771898778}
   interact: {fileID: 16739846}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 428454884}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &16739850
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1004,12 +1008,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1962057940}
   interact: {fileID: 61222378}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 545550072}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &61222381
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1213,7 +1219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 75.875
+      value: -30.5
       objectReference: {fileID: 0}
     - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2063,12 +2069,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1566341333}
   interact: {fileID: 108930398}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1051350275}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &108930402
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2188,115 +2196,6 @@ Transform:
   - {fileID: 1270342327}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &128585691
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 509510855213480625, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_Size.x
-      value: 6.5087442
-      objectReference: {fileID: 0}
-    - target: {fileID: 509510855213480625, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_Size.y
-      value: 15.8391075
-      objectReference: {fileID: 0}
-    - target: {fileID: 509510855213480625, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_Offset.x
-      value: 1.4312205
-      objectReference: {fileID: 0}
-    - target: {fileID: 509510855213480625, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.37431908
-      objectReference: {fileID: 0}
-    - target: {fileID: 509510855213480625, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 20.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 509510855213480625, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 20.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 1649881891003227701, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_Name
-      value: ZombieTest1 (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -35.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4409743913183598623, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: walkTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4409743913183598623, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: startDirection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5362744263707811208, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 77104bfd851775a448e0a5e2688e38a8, type: 2}
-    - target: {fileID: 6172310492043114054, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 119ab09907ce9dd4db2c77a0cc7db98e, type: 3}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
 --- !u!1 &129109972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,12 +2276,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 374566648}
   interact: {fileID: 129109972}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 36018544}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &129109975
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2521,10 +2422,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Not Enogh
+  m_text: "Not Enogh\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01\u0E01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: afa36ece4f166b1458366e9c26f71179, type: 2}
+  m_sharedMaterial: {fileID: 7202056361249415051, guid: afa36ece4f166b1458366e9c26f71179, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2548,13 +2449,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2605,9 +2506,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135660592}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5391997, y: 1.5391997, z: 1.5391997}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 271824470}
@@ -2615,8 +2516,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.5911, y: -155}
-  m_SizeDelta: {x: 686.9473, y: 88.7834}
+  m_AnchoredPosition: {x: -2.1524992, y: -182.92499}
+  m_SizeDelta: {x: 560.0767, y: 88.7834}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &139211938
 GameObject:
@@ -2715,12 +2616,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 335019064}
   interact: {fileID: 139211938}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 909609492}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &139211942
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2954,12 +2857,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1866470602}
   interact: {fileID: 149968299}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 198846141}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &149968303
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3635,13 +3540,15 @@ MonoBehaviour:
   map: {fileID: 0}
   teleportDestination: {fileID: 0}
   interact: {fileID: 217751647}
-  interact2: {fileID: 0}
+  interact2: {fileID: 720240842}
+  interact3: {fileID: 2104303165}
   interactLight: {fileID: 919051758}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
-  messageDuration: 2
+  messageDuration: 4
+  dialogueData: {fileID: 11400000, guid: 47c856724c0520c4fb4302b875ad4d39, type: 2}
 --- !u!95 &217751649
 Animator:
   serializedVersion: 5
@@ -4125,12 +4032,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1505361477}
   interact: {fileID: 250118674}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 705967381}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &250118677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4309,7 +4218,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271824469}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4318,8 +4227,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2.6653137, y: -2.1322021}
+  m_SizeDelta: {x: 120.47388, y: 42.64554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &271824471
 MonoBehaviour:
@@ -4334,7 +4243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 0.5803922}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5080,12 +4989,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 39080102}
   interact: {fileID: 311975014}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 249043508}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &311975018
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6373,12 +6284,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1947500165}
   interact: {fileID: 387138669}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1889543419}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!61 &387138673
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6521,12 +6434,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 387427171}
   interact2: {fileID: 971870918}
+  interact3: {fileID: 0}
   interactLight: {fileID: 2077729931}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
-  messageDuration: 2
+  messageDuration: 3
+  dialogueData: {fileID: 11400000, guid: 0809e7668680ece409285887a5651a52, type: 2}
 --- !u!212 &387427175
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7247,12 +7162,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 417517513}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 343503057}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &417517517
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7669,12 +7586,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 457464598}
   interact: {fileID: 436885317}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 562435701}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &436885321
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8262,12 +8181,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 456183801}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 938677499}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
-  messageDuration: 2
+  messageDuration: 4
+  dialogueData: {fileID: 11400000, guid: b68d6d9d65127fc44aa379fe739b7e4d, type: 2}
 --- !u!61 &456183806
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8556,12 +8477,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1947493938}
   interact: {fileID: 465159334}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1936654623}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &465159338
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8877,12 +8800,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 395841303}
   interact: {fileID: 476099058}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 404455754}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &476099062
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10211,12 +10136,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1195130578}
   interact: {fileID: 553672420}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1384073189}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &553672424
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10282,6 +10209,7 @@ GameObject:
   - component: {fileID: 554414269}
   - component: {fileID: 554414268}
   - component: {fileID: 554414272}
+  - component: {fileID: 554414273}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -10389,6 +10317,149 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HpBar: {fileID: 2107639675}
   EnergyBar: {fileID: 887157075}
+--- !u!114 &554414273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554414267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86eeac9c9aa34e42ad9d0d2f1752749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueText: {fileID: 135660593}
+  delay: 0.05
+  messageDuration: 3
+--- !u!1 &555627685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 555627687}
+  - component: {fileID: 555627686}
+  m_Layer: 0
+  m_Name: Hotel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &555627686
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555627685}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0e6609cf9aa714aee861838861177086, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.15
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &555627687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555627685}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &559353339
 GameObject:
   m_ObjectHideFlags: 0
@@ -10487,12 +10558,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1583549370}
   interact: {fileID: 559353339}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1981038091}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &559353343
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10899,12 +10972,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 574042211}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 2002968147}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!1 &579740271
 GameObject:
   m_ObjectHideFlags: 0
@@ -10957,12 +11032,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 664243924}
   interact: {fileID: 579740271}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 2061020737}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &579740274
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12136,12 +12213,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1701584168}
   interact: {fileID: 616524297}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 2034154262}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &616524301
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12313,12 +12392,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 620439009}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1751957269}
   isVendingMachine: 1
   itemPrice: 100
   itemPrefab: {fileID: 819747945215744253, guid: 7586fbdf12eecfb47b5de2cb5e4f36f8, type: 3}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &620439011
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12886,12 +12967,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 843359220}
   interact: {fileID: 662044976}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1871631355}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &662044980
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13108,12 +13191,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 641117785}
   interact: {fileID: 663139837}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 324951458}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &663139840
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13737,12 +13822,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 653711115}
   interact: {fileID: 702677548}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 960289926}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &702677552
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14261,6 +14348,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battery
       objectReference: {fileID: 0}
+    - target: {fileID: 819747945215744253, guid: 8b0a8bf9038039c4e953424c7b1e2484, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: 8b0a8bf9038039c4e953424c7b1e2484, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -14346,6 +14437,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b0a8bf9038039c4e953424c7b1e2484, type: 3}
+--- !u!1 &720240842 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 819747945215744253, guid: 8b0a8bf9038039c4e953424c7b1e2484, type: 3}
+  m_PrefabInstance: {fileID: 720240841}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &726297669
 GameObject:
   m_ObjectHideFlags: 0
@@ -14774,12 +14870,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 744059585}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1927910797}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &744059589
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15738,6 +15836,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sugar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 819747945215744253, guid: 97f71b5ee67f222488251b3e2148c761, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: 97f71b5ee67f222488251b3e2148c761, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -16131,11 +16233,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4285713
+      value: 2.5649998
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4285713
+      value: 2.5649998
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7955
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16147,7 +16253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 1.3977
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16167,11 +16273,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -4.464264
+      value: 5.7054567
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.675354
+      value: -4.4316177
       objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: de692545766877c42a72fa1a8ed83fbb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -17004,12 +17110,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 2125088742}
   interact: {fileID: 915070879}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 993080184}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &915070883
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17569,12 +17677,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1877245969}
   interact: {fileID: 933903814}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 483769295}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &933903818
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18098,12 +18208,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1626157626}
   interact: {fileID: 950035186}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1047865721}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &950035190
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18358,12 +18470,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 917491513}
   interact: {fileID: 953001340}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 76467875}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &953001344
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18724,7 +18838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &971870919
 Transform:
   m_ObjectHideFlags: 0
@@ -18803,12 +18917,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1913990736}
   interact: {fileID: 971870918}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1015286546}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &971870922
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19126,12 +19242,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 767632115}
   interact: {fileID: 982149756}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 70255328}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &982149760
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19737,12 +19855,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1948020390}
   interact: {fileID: 1020039776}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1669088036}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1020039780
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20794,12 +20914,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 96716177}
   interact: {fileID: 1090041578}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 0}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1090041582
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21152,12 +21274,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 539517311}
   interact: {fileID: 1111260069}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 46345125}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1111260073
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21708,7 +21832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 042bd5c0b1c95ed4ab3de1e4f729bb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 10
   faceValu: 0
 --- !u!61 &1143371083
 BoxCollider2D:
@@ -21774,6 +21898,7 @@ MonoBehaviour:
   currentHP: 25
   maxEnergy: 25
   currentEnergy: 10
+  damageSound: {fileID: 0}
 --- !u!70 &1143371086
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -22239,12 +22364,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1863754716}
   interact: {fileID: 1159172395}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 2003578142}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1159172398
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22616,7 +22743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 3367198379175166904, guid: 0f7711eadc92e77468f527bc1d270ba3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22873,12 +23000,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 1185734004}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 609820860}
   isVendingMachine: 1
   itemPrice: 250
   itemPrefab: {fileID: 819747945215744253, guid: 9ace8b8f0bd78d44aab3c4dcb8cf22d5, type: 3}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1185734008
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23028,12 +23157,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1727156000}
   interact: {fileID: 1192395081}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1061350048}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1192395085
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23978,12 +24109,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 1225828031}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 652379316}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1225828035
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24292,12 +24425,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 107289823}
   interact: {fileID: 1237182687}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 477401859}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1237182691
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24827,12 +24962,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 835413844}
   interact: {fileID: 1255226033}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 611646374}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1255226037
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -25395,12 +25532,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 682914630}
   interact: {fileID: 1284766393}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1203148625}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1284766397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26668,12 +26807,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 1363237938}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1547746397}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1363237941
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27325,6 +27466,8 @@ GameObject:
   - component: {fileID: 1408459360}
   - component: {fileID: 1408459362}
   - component: {fileID: 1408459361}
+  - component: {fileID: 1408459364}
+  - component: {fileID: 1408459363}
   m_Layer: 0
   m_Name: Boom001
   m_TagString: Untagged
@@ -27420,6 +27563,116 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!82 &1408459363
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408459359}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1408459364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408459359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7701ffa0579ee040b24371e3db8df65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playRadius: 0
+  sfxSound: {fileID: 8300000, guid: 5b831a94b52cefc4aaa861c8be6fe724, type: 3}
 --- !u!1 &1412855939
 GameObject:
   m_ObjectHideFlags: 0
@@ -27563,8 +27816,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ItemName
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: afa36ece4f166b1458366e9c26f71179, type: 2}
+  m_sharedMaterial: {fileID: 7202056361249415051, guid: afa36ece4f166b1458366e9c26f71179, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -28647,6 +28900,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sugar
       objectReference: {fileID: 0}
+    - target: {fileID: 819747945215744253, guid: 97f71b5ee67f222488251b3e2148c761, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9217371187227817094, guid: 97f71b5ee67f222488251b3e2148c761, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -28732,134 +28989,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97f71b5ee67f222488251b3e2148c761, type: 3}
---- !u!1 &1483960371
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1483960373}
-  - component: {fileID: 1483960372}
-  m_Layer: 0
-  m_Name: Z1-V2-Searching-Free-1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1483960372
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483960371}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ff8240148ee026c4babb53949381e1cd, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.16
-  m_Pitch: 0.38
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &1483960373
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483960371}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1491704925
 GameObject:
   m_ObjectHideFlags: 0
@@ -29528,8 +29657,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'ItemDesciption '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: afa36ece4f166b1458366e9c26f71179, type: 2}
+  m_sharedMaterial: {fileID: 7202056361249415051, guid: afa36ece4f166b1458366e9c26f71179, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29785,12 +29914,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 672359248}
   interact: {fileID: 1535565029}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 505200035}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1535565033
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30270,12 +30401,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1240832961}
   interact: {fileID: 1566935442}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1153727524}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1566935446
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30737,12 +30870,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 96716177}
   interact: {fileID: 1596811327}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1429877638}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1596811330
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31026,12 +31161,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 91207777}
   interact: {fileID: 1631067139}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 588092493}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1631067143
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31189,6 +31326,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 757334416816677648, guid: 8b0a8bf9038039c4e953424c7b1e2484, type: 3}
+      propertyPath: dialogueData
+      value: 
+      objectReference: {fileID: 11400000, guid: 47c856724c0520c4fb4302b875ad4d39, type: 2}
     - target: {fileID: 819747945215744253, guid: 8b0a8bf9038039c4e953424c7b1e2484, type: 3}
       propertyPath: m_Name
       value: Battery (1)
@@ -31978,12 +32119,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1214226520}
   interact: {fileID: 1734112375}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1355400501}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1734112379
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32217,12 +32360,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 1735523280}
   interact2: {fileID: 971870918}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1493864439}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
-  messageDuration: 2
+  messageDuration: 3
+  dialogueData: {fileID: 11400000, guid: 0809e7668680ece409285887a5651a52, type: 2}
 --- !u!212 &1735523284
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33600,12 +33745,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 96716177}
   interact: {fileID: 1869789057}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 0}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1869789061
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33973,12 +34120,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 2134355441}
   interact: {fileID: 1871072756}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 804624452}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1871072760
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34728,12 +34877,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 394066509}
   interact: {fileID: 1903064933}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 80529993}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!61 &1903064937
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36444,12 +36595,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1498954462}
   interact: {fileID: 1958522512}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1870484006}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1958522516
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36714,12 +36867,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1382553780}
   interact: {fileID: 1982487944}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 393781640}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &1982487948
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38131,12 +38286,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1302512244}
   interact: {fileID: 2044346818}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 142766169}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &2044346822
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38753,12 +38910,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1982967387}
   interact: {fileID: 2056043542}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1382320592}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &2056043546
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39399,12 +39558,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 1048627884}
   interact: {fileID: 2077797812}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1407666818}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &2077797816
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39891,12 +40052,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 2099267394}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 974712841}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 135660593}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &2099267397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39965,6 +40128,11 @@ Transform:
   - {fileID: 974712843}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2104303165 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 819747945215744253, guid: 97f71b5ee67f222488251b3e2148c761, type: 3}
+  m_PrefabInstance: {fileID: 831667509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2105578750
 GameObject:
   m_ObjectHideFlags: 0
@@ -40363,12 +40531,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 24364159}
   interact: {fileID: 2125322183}
   interact2: {fileID: 0}
+  interact3: {fileID: 0}
   interactLight: {fileID: 1289235916}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!212 &2125322187
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40820,7 +40990,6 @@ SceneRoots:
   - {fileID: 983498715}
   - {fileID: 878103629}
   - {fileID: 1047886826}
-  - {fileID: 128585691}
   - {fileID: 1176050687}
   - {fileID: 509778288}
   - {fileID: 955265734}
@@ -40856,4 +41025,4 @@ SceneRoots:
   - {fileID: 540320968}
   - {fileID: 730156703}
   - {fileID: 831667509}
-  - {fileID: 1483960373}
+  - {fileID: 555627687}

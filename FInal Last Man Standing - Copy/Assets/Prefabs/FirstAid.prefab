@@ -121,12 +121,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 3
   itemName: First Aid Kit
-  itemDescription: Hp + 25
+  itemDescription: "\u0E40\u0E25\u0E37\u0E2D\u0E14 + 50"
   quantity: 1
   isStackable: 1
   maxStack: 10
   isUsable: 1
-  restoreHP: 25
+  restoreHP: 50
   restoreEnergy: 0
 --- !u!212 &-1881021972363297769
 SpriteRenderer:
@@ -202,6 +202,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!61 &8952914867116580802
 BoxCollider2D:
   m_ObjectHideFlags: 0

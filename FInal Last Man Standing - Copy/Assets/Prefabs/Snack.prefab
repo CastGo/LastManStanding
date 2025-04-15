@@ -121,10 +121,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 2
   itemName: Snack
-  itemDescription: Energy + 10 Hp +10
+  itemDescription: "\u0E40\u0E2D\u0E19\u0E40\u0E19\u0E2D\u0E23\u0E4C\u0E08\u0E35\u0E49
+    + 10 \u0E40\u0E25\u0E37\u0E2D\u0E14 +10"
   quantity: 1
   isStackable: 1
-  maxStack: 10
+  maxStack: 3
   isUsable: 1
   restoreHP: 10
   restoreEnergy: 10
@@ -202,6 +203,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!61 &2211229829963923377
 BoxCollider2D:
   m_ObjectHideFlags: 0

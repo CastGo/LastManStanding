@@ -121,7 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 8
   itemName: Bomb
-  itemDescription: Use it to blow up the door.
+  itemDescription: "\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E40\u0E1A\u0E34\u0E14\u0E1B\u0E23\u0E30\u0E15\u0E39\u0E2B\u0E49\u0E2D\u0E07
+    4-2"
   quantity: 1
   isStackable: 1
   maxStack: 5
@@ -196,12 +197,14 @@ MonoBehaviour:
   teleportDestination: {fileID: 0}
   interact: {fileID: 819747945215744253}
   interact2: {fileID: 1268058001764951062}
+  interact3: {fileID: 0}
   interactLight: {fileID: 4872851487918968804}
   isVendingMachine: 0
   itemPrice: 10
   itemPrefab: {fileID: 0}
   messageText: {fileID: 0}
   messageDuration: 2
+  dialogueData: {fileID: 0}
 --- !u!61 &8952914867116580802
 BoxCollider2D:
   m_ObjectHideFlags: 0

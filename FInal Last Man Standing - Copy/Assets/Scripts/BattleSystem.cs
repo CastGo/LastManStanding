@@ -34,7 +34,7 @@ public class BattleSystem : MonoBehaviour
     bool bossHealedAtQuarter = false;
     private int enemyStunTurns = 0;
     private int stunCooldown = 0;
-    private const int stunCooldownTurns = 3;
+    private const int stunCooldownTurns = 4;
     public Button stunButton;
 
     void Start()
@@ -59,7 +59,7 @@ public class BattleSystem : MonoBehaviour
         GameObject enemyGo = Instantiate(GameManager.instance.nextEnemyPrefab, enemyBattleStation);
         enemyUnit = enemyGo.GetComponent<Unit>();
 
-        dialogueText.text = "A wild" + enemyUnit.unitName + " approaches...";
+        dialogueText.text = "คุณเดินมาเจอกับ " + enemyUnit.unitName + " จะทำยังไงต่อ";
 
         playerHUD.SetHUD(playerUnit);
         enemyHUD.SetHUD(enemyUnit);
@@ -76,7 +76,7 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(enemyUnit.FlashRed());
 
         enemyHUD.SetHP(enemyUnit.currentHP);
-        dialogueText.text = "The attack is successful!";
+        dialogueText.text = "โจมตีสำเร็จ";
 
         yield return new WaitForSeconds(2f);
 
@@ -97,7 +97,7 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(enemyUnit.FlashRed());
 
         enemyHUD.SetHP(enemyUnit.currentHP);
-        dialogueText.text = "You stunned the enemy!";
+        dialogueText.text = "คุณทำให้ศัตรูติดสถานะมึนงง";
 
         playerHUD.SetEnergy(playerUnit.currentEnergy);
         yield return new WaitForSeconds(2f);
@@ -118,7 +118,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (enemyStunTurns > 0)
         {
-            dialogueText.text = enemyUnit.unitName + " is stunned and can't move!";
+            dialogueText.text = enemyUnit.unitName + " ติดสถานะมึนงงอยู่ไม่สามารถขยับได้";
             enemyStunTurns--; // ✅ ลดระยะ stun ลง
             yield return new WaitForSeconds(2f);
 
@@ -127,7 +127,7 @@ public class BattleSystem : MonoBehaviour
             yield break;
         }
 
-        dialogueText.text = enemyUnit.unitName + " attacks!";
+        dialogueText.text = enemyUnit.unitName + " โจมตี";
         yield return new WaitForSeconds(1f);
 
         bool isDead = false;
@@ -137,7 +137,7 @@ public class BattleSystem : MonoBehaviour
             miniBossTurnCounter++;
             if (miniBossTurnCounter % 2 == 0)
             {
-                dialogueText.text = "MiniBoss uses a POWERFUL ATTACK!";
+                dialogueText.text = "ซอมบี้ Chibi โจมตีอย่างรุนแรง";
                 yield return new WaitForSeconds(1f);
                 isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
                 StartCoroutine(playerUnit.FlashRed());
@@ -160,17 +160,17 @@ public class BattleSystem : MonoBehaviour
 
             if (enemyUnit.currentHP <= quarterHP && !bossHealedAtQuarter)
             {
-                dialogueText.text = "Boss regenerates with DARK MAGIC!";
+                dialogueText.text = "ซอมบี้ ผ.อ ฮีลเลือดตัวเองอีกครั้ง";
                 yield return new WaitForSeconds(1f);
-                enemyUnit.Heal(30); // 🔁 ปรับตามต้องการ
+                enemyUnit.Heal(15); // 🔁 ปรับตามต้องการ
                 enemyHUD.SetHP(enemyUnit.currentHP);
                 bossHealedAtQuarter = true;
             }
             else if (enemyUnit.currentHP <= halfHP && !bossHealedAtHalf)
             {
-                dialogueText.text = "Boss uses a healing spell!";
+                dialogueText.text = "ซอมบี้ ผ.อ ฮีลเลือดตัวเอง";
                 yield return new WaitForSeconds(1f);
-                enemyUnit.Heal(20);
+                enemyUnit.Heal(10);
                 enemyHUD.SetHP(enemyUnit.currentHP);
                 bossHealedAtHalf = true;
             }
@@ -179,7 +179,7 @@ public class BattleSystem : MonoBehaviour
                 // 2️⃣ Attack logic
                 if (bossTurnCounter % 2 == 0)
                 {
-                    dialogueText.text = "Boss unleashes a POWER STRIKE!";
+                    dialogueText.text = "ซอมบี้ ผ.อ โจมตีอย่างรุงแรง";
                     yield return new WaitForSeconds(1f);
                     isDead = playerUnit.TakeDamage(enemyUnit.damage * 2);
                     StartCoroutine(playerUnit.FlashRed());
@@ -225,7 +225,8 @@ public class BattleSystem : MonoBehaviour
             if (enemyUnit.CompareTag("MiniBoss"))
             {
                 int explosionDamage = 15; // หรือจะตั้งไว้ในตัวแปรก็ได้
-                dialogueText.text = "MiniBoss explodes!";
+                dialogueText.text = "ซอมบี้ Chibi ระเบิดตัวเอง";
+
                 bool playerDied = playerUnit.TakeDamage(explosionDamage);
                 StartCoroutine(playerUnit.FlashRed());
                 playerHUD.SetHP(playerUnit.currentHP);
@@ -233,7 +234,7 @@ public class BattleSystem : MonoBehaviour
                 if (playerDied)
                 {
                     state = BattleState.LOST;
-                    dialogueText.text = "You both died!";
+                    dialogueText.text = "คุณเสียชีวิตจากแรงระเบิด";
                     StartCoroutine(ReturnAfterLost());
                     StartCoroutine(DelayReEnablePlayerCollider());
                     return; // ออกจากฟังก์ชันไม่ต้องไป ReturnAfterWin()
@@ -245,13 +246,13 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
-                dialogueText.text = "You Won!!";
+                dialogueText.text = "คุณชนะแล้ว!!";
                 StartCoroutine(ReturnAfterWin());
             }
         }
         else if (state == BattleState.LOST)
         {
-            dialogueText.text = "You Lost!!";
+            dialogueText.text = "คุณเสียชีวิต";
             StartCoroutine(ReturnAfterLost());
             StartCoroutine(DelayReEnablePlayerCollider());
         }
@@ -371,15 +372,15 @@ public class BattleSystem : MonoBehaviour
             stunCooldown--; // ลดคูลดาวน์ stun ทุกเทิร์น
         if (stunButton != null)
             stunButton.interactable = stunCooldown <= 0;
-        dialogueText.text = "Choose an action";
+        dialogueText.text = "เลือกสิ่งที่คุณจะทำ";
     }
 
     IEnumerator PlayerHeal()
     {
-        playerUnit.Heal(25);
+        playerUnit.Heal(50);
 
         playerHUD.SetHP(playerUnit.currentHP);
-        dialogueText.text = "you feel strong!!";
+        dialogueText.text = "คุณได้รับการฟื้นฟู";
 
         yield return new WaitForSeconds(2f);
 
@@ -388,7 +389,7 @@ public class BattleSystem : MonoBehaviour
     }
     IEnumerator PlayerRun()
     {
-        dialogueText.text = "run away you gonna die!!";
+        dialogueText.text = "คุณรีบหนีออกมา!!";
 
         yield return new WaitForSeconds(2f);
 
@@ -400,14 +401,14 @@ public class BattleSystem : MonoBehaviour
     IEnumerator DelayShowActionMessage()
     {
         yield return new WaitForSeconds(2f);
-        dialogueText.text = "Choose an action";
+        dialogueText.text = "เลือกสิ่งที่คุณจะทำ";
     }
     IEnumerator ResetDialogueText()
     {
         yield return new WaitForSeconds(2f);
         if (state == BattleState.PLAYERTURN)
         {
-            dialogueText.text = "Choose an action";
+            dialogueText.text = "เลือกสิ่งที่คุณจะทำ";
         }
     }
     private bool TryUseItemByID(int itemID)
@@ -461,12 +462,12 @@ public class BattleSystem : MonoBehaviour
             int powerfulDamage = playerUnit.damage * 3;
             StartCoroutine(PlayerAttack(powerfulDamage));
             playerHUD.SetEnergy(playerUnit.currentEnergy);
-            dialogueText.text = "You unleashed a POWER ATTACK!";
+            dialogueText.text = "คุณใช้การโจมตีอย่างรุนแรง";
             ReturnToCombat();
         }
         else
         {
-            dialogueText.text = "Not enough energy!";
+            dialogueText.text = "คุณมีเอนเนอร์จี้ไม่พอ";
             StartCoroutine(ResetDialogueText());
         }
     }
@@ -477,7 +478,7 @@ public class BattleSystem : MonoBehaviour
 
         if (stunCooldown > 0)
         {
-            dialogueText.text = "Stun is on cooldown! (" + stunCooldown + " turns left)";
+            dialogueText.text = "สกิลสตั้นติดคูลดาวน์ (" + stunCooldown + " เทิร์น)";
             StartCoroutine(ResetDialogueText());
             return;
         }
@@ -487,7 +488,7 @@ public class BattleSystem : MonoBehaviour
 
         if (!playerUnit.UseEnergy(energyCost))
         {
-            dialogueText.text = "Not enough energy to Stun!";
+            dialogueText.text = "คุณมีเอนเนอร์จี้ไม่พอ";
             StartCoroutine(ResetDialogueText());
             return;
         }
@@ -505,11 +506,18 @@ public class BattleSystem : MonoBehaviour
 
         if (hasHealed)
         {
-            dialogueText.text = "You can't heal again!";
+            dialogueText.text = "คุณไม่สามารถฮีลได้อีกรอบ";
             return;
         }
 
-        hasHealed = true; // ✅ Mark ว่าใช้ Heal ไปแล้ว
+        if (!HasItemID(3)) // ✅ เช็คว่าไม่มี First Aid Kit ID 3
+        {
+            dialogueText.text = "คุณไม่มี First Aid Kit!";
+            StartCoroutine(ResetDialogueText());
+            return;
+        }
+
+        hasHealed = true;
         StartCoroutine(PlayerHeal());
     }
     public void OnRunButton()
@@ -526,7 +534,7 @@ public class BattleSystem : MonoBehaviour
 
         if (hasUsedItemThisTurn)
         {
-            dialogueText.text = "You already used an item this turn!";
+            dialogueText.text = "คุณใช้ไอเทมไปแล้วในเทิร์นนี้";
             StartCoroutine(ResetDialogueText());
             ReturnToCombat();
             return;
@@ -536,14 +544,14 @@ public class BattleSystem : MonoBehaviour
         {
             playerUnit.GainEnergy(5);
             playerHUD.SetEnergy(playerUnit.currentEnergy);
-            dialogueText.text = "You used a Snack!";
+            dialogueText.text = "คุณกิน Sushi เอนเนอร์จี้เพิ่ม 10 หน่วย";
             hasUsedItemThisTurn = true;
 
             ReturnToCombat();
         }
         else
         {
-            dialogueText.text = "You don't have any Snack!";
+            dialogueText.text = "คุณไม่มี Sushi เหลือแล้ว";
         }
         StartCoroutine(DelayShowActionMessage());
     }
@@ -555,7 +563,7 @@ public class BattleSystem : MonoBehaviour
 
         if (hasUsedItemThisTurn)
         {
-            dialogueText.text = "You already used an item this turn!";
+            dialogueText.text = "คุณใช้ไอเทมไปแล้วในเทิร์นนี้";
             StartCoroutine(ResetDialogueText());
             ReturnToCombat();
             return;
@@ -568,14 +576,14 @@ public class BattleSystem : MonoBehaviour
             playerHUD.SetHP(playerUnit.currentHP);
             playerHUD.SetEnergy(playerUnit.currentEnergy);
 
-            dialogueText.text = "You ate Food! (+10 HP, +10 Energy)";
+            dialogueText.text = "คุณกิน Snack เลือดเพิ่ม 10 หน่วย เอนเนอร์จี้เพิ่ม 10 หน่วย";
             hasUsedItemThisTurn = true;
 
             ReturnToCombat();
         }
         else
         {
-            dialogueText.text = "You don't have any Food!";
+            dialogueText.text = "คุณไม่มี Snack แล้ว";
         }
         StartCoroutine(DelayShowActionMessage());
     }
@@ -625,5 +633,29 @@ public class BattleSystem : MonoBehaviour
         attackFunction.SetActive(false);
         itemFunction.SetActive(false);
         combatMenu.SetActive(true);
+    }
+    private bool HasItemID(int id)
+    {
+        InventoryController inventory = FindAnyObjectByType<InventoryController>();
+
+        foreach (Transform slotTransform in inventory.slotPanel.transform)
+        {
+            ItemSlot slot = slotTransform.GetComponent<ItemSlot>();
+            if (slot.currentItem != null)
+            {
+                Item item = slot.currentItem.GetComponent<Item>();
+                if (item != null && item.ID == id && item.quantity > 0)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    IEnumerator DisableObjectAfterSeconds(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        obj.SetActive(false);
     }
 }
