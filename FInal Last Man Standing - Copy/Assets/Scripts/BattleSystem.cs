@@ -225,7 +225,7 @@ public class BattleSystem : MonoBehaviour
             if (enemyUnit.CompareTag("MiniBoss"))
             {
                 int explosionDamage = 15; // หรือจะตั้งไว้ในตัวแปรก็ได้
-                dialogueText.text = "ซอมบี้ Chibi ระเบิดตัวเอง";
+                dialogueText.text = "ซอมบี้ Chibi ใช้การโจมตีเฮือกสุดท้าย";
 
                 bool playerDied = playerUnit.TakeDamage(explosionDamage);
                 StartCoroutine(playerUnit.FlashRed());
@@ -234,7 +234,7 @@ public class BattleSystem : MonoBehaviour
                 if (playerDied)
                 {
                     state = BattleState.LOST;
-                    dialogueText.text = "คุณเสียชีวิตจากแรงระเบิด";
+                    dialogueText.text = "คุณเสียชีวิตจากแรง";
                     StartCoroutine(ReturnAfterLost());
                     StartCoroutine(DelayReEnablePlayerCollider());
                     return; // ออกจากฟังก์ชันไม่ต้องไป ReturnAfterWin()

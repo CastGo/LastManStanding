@@ -449,7 +449,7 @@ public class InteractObject : MonoBehaviour
         Destroy(SaveController.instance?.gameObject);
 
         Debug.Log("▶ Load IntroScene now");
-        SceneFader.instance.FadeToScene("KeyEnd");
+        SceneFader.instance.FadeToScene("KeyEND");
     }
     IEnumerator ShowMessageAndReturnToIntro2(string message)
     {
@@ -467,7 +467,7 @@ public class InteractObject : MonoBehaviour
         Destroy(SaveController.instance?.gameObject);
 
         Debug.Log("▶ Load IntroScene now");
-        SceneFader.instance.FadeToScene("CutterEnd");
+        SceneFader.instance.FadeToScene("CutterEND");
     }
     IEnumerator PlayDialogue()
     {

@@ -139,11 +139,16 @@ public class SaveController : MonoBehaviour
             UpdateCameraConfinerToClosest(player.GetComponent<Collider2D>());
         }
 
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
         List<GameObject> allZombies = new List<GameObject>();
-        allZombies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-        allZombies.AddRange(GameObject.FindGameObjectsWithTag("MiniBoss"));
-        allZombies.AddRange(GameObject.FindGameObjectsWithTag("Boss"));
-        allZombies.AddRange(GameObject.FindGameObjectsWithTag("NPCStudent"));
+        foreach (GameObject obj in allObjects)
+        {
+            if ((obj.CompareTag("Enemy") || obj.CompareTag("MiniBoss") || obj.CompareTag("Boss") || obj.CompareTag("NPCStudent")) &&
+                obj.scene.IsValid() && obj.scene.name == "2-1 Room")
+            {
+                allZombies.Add(obj);
+            }
+        }
 
         foreach (ZombieSaveData zombieData in saveData.zombiesData)
         {
