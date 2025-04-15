@@ -165,9 +165,12 @@ public class InteractObject : MonoBehaviour
                     ShowVendingMessage("You need a bolt cutter to open this door.");
                     return;
                 }
-                confiner.m_BoundingShape2D = map;
-                TeleportPlayer();
 
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.StartCoroutine(ShowMessageAndReturnToIntro2("You unlocked the door with the cutter!"));
+                }
+                return;
             }
             if (interact.CompareTag("window"))
             {
@@ -417,7 +420,25 @@ public class InteractObject : MonoBehaviour
         Destroy(SaveController.instance?.gameObject);
 
         Debug.Log("▶ Load IntroScene now");
-        SceneManager.LoadScene("IntroScene");
+        SceneFader.instance.FadeToScene("KeyEnd");
+    }
+    IEnumerator ShowMessageAndReturnToIntro2(string message)
+    {
+        Debug.Log("▶ ShowMessageAndReturnToIntro started");
+
+        if (messageText != null)
+        {
+            messageText.text = message;
+            messageText.gameObject.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(messageDuration + 0.5f);
+
+        Destroy(GameManager.instance?.gameObject);
+        Destroy(SaveController.instance?.gameObject);
+
+        Debug.Log("▶ Load IntroScene now");
+        SceneFader.instance.FadeToScene("CutterEnd");
     }
 }
 

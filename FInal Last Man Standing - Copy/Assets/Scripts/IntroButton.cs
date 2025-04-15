@@ -8,16 +8,19 @@ public class IntroButton : MonoBehaviour
     public void OnPlayButton()
     {
         PlayerPrefs.SetInt("LoadGame", 0); // ใช้แค่บอกว่าไม่ต้องโหลด
-        SceneManager.LoadScene("2-1 Room");
+        SceneFader.instance.FadeToScene("2-1 Room");
     }
 
     public void OnLoadButton()
     {
         PlayerPrefs.SetInt("LoadGame", 1); // ใช้แค่บอกว่าให้โหลด
         PlayerPrefs.Save();
-        SceneManager.LoadScene("2-1 Room");
+        SceneFader.instance.FadeToScene("2-1 Room");
     }
-
+    public void OnLeaveButton()
+    {
+        SceneFader.instance.FadeToScene("IntroScene");
+    }
     public void OnExitButton()
     {
         Application.Quit();

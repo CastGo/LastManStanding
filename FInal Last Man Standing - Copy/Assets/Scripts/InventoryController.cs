@@ -370,6 +370,6 @@ public class InventoryController : MonoBehaviour
         Destroy(SaveController.instance?.gameObject);
 
         Time.timeScale = 1f;
-        SceneManager.LoadScene("IntroScene");
+        SceneFader.instance.FadeToScene("IntroScene");
     }
 }

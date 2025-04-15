@@ -6,9 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/IntroScene.unity
+    guid: 2feab0b145a3f604eb6589f422474c1f
+  - enabled: 1
     path: Assets/Scenes/2-1 Room.unity
     guid: be8e56f5c8f3cfd4ea90db40337a6736
   - enabled: 1
     path: Assets/Scenes/TurnBase.unity
     guid: 355ac76ea54cc5b4987023796eb3e006
+  - enabled: 1
+    path: Assets/Scenes/CutterEND.unity
+    guid: a779ee3c05f15824fb94538af970baed
+  - enabled: 1
+    path: Assets/Scenes/KeyEND.unity
+    guid: 936cf5d524a34384fac8d68caeb8da00
   m_configObjects: {}
