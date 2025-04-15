@@ -9,6 +9,7 @@ public class IntroButton : MonoBehaviour
     {
         PlayerPrefs.SetInt("LoadGame", 0); // ใช้แค่บอกว่าไม่ต้องโหลด
         PlayerPrefs.SetInt("StartGameDialogue", 1);
+        PlayerPrefs.SetInt("SaveOnStart", 1);
         SceneFader.instance.FadeToScene("2-1 Room");
     }
 

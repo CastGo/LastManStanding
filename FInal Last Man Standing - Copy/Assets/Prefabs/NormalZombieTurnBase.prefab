@@ -101,9 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: "\u0E0B\u0E2D\u0E21\u0E1A\u0E35\u0E49"
   unitLevel: 1
-  damage: 10
-  maxHP: 50
-  currentHP: 50
+  damage: 5
+  maxHP: 40
+  currentHP: 40
   maxEnergy: 0
   currentEnergy: 0
   damageSound: {fileID: 8300000, guid: fb7fbee5d5ed64bd1a8ca1ad242ba7eb, type: 3}

@@ -256,10 +256,10 @@ public class SaveController : MonoBehaviour
     {
         yield return new WaitUntil(() => FindObjectOfType<InventoryController>() != null);
         inventoryController = FindObjectOfType<InventoryController>();
-
         yield return new WaitUntil(() => inventoryController.isInitialized);
 
         int shouldLoad = PlayerPrefs.GetInt("LoadGame", 0);
+
         if (shouldLoad == 1)
         {
             LoadGame();
@@ -268,8 +268,16 @@ public class SaveController : MonoBehaviour
         else
         {
             NewGame();
+
+            // ✅ ถ้า flag SaveOnStart ถูกตั้งไว้ → เซฟเกมหลังเริ่มใหม่
+            if (PlayerPrefs.GetInt("SaveOnStart", 0) == 1)
+            {
+                SaveGame();
+                PlayerPrefs.DeleteKey("SaveOnStart");
+            }
         }
     }
+
 }
 
 
